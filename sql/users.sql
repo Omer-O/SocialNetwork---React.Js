@@ -11,6 +11,6 @@ CREATE TABLE users (
     email TEXT NOT NULL UNIQUE CHECK (email <> ''),
     bio VARCHAR(255) NOT NULL,
     url VARCHAR(300) NOT NULL,
-    password VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL CHECK (password <> ''),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

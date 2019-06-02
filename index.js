@@ -23,12 +23,13 @@ app.use(cookieSession({ //this code create a session with the cookie.
 }));
 
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(csurf());
-app.use((req, res, next) => {
-res.locals.csrfToken = req.csrfToken();
-     // res.setHeader('X-FRAME-OPTIONS', 'DENY');
-    next();
-});
+
+// app.use(csurf());
+// app.use((req, res, next) => {
+// res.locals.csrfToken = req.csrfToken();
+//      // res.setHeader('X-FRAME-OPTIONS', 'DENY');
+//     next();
+// });
 
 var diskStorage = multer.diskStorage({
     destination: function (req, file, callback) {
@@ -61,49 +62,49 @@ if (process.env.NODE_ENV != 'production') {
     app.use('/bundle.js', (req, res) => res.sendFile(`${__dirname}/bundle.js`));
 }
 ///////////////// regestration page /////////////////////////////
-// app.get("/registration", (req, res) => {
-//     res.render("registration", {
-//         layout: "main",
-//         siteName: "The DUDE Day",
-//     });
+// app.get("/welcome", (req, res) => {
+//     res.render("/welcome");
 // });
-// ///registration post request:
-// app.post('/registration', (req,res) => {
-//         bc.hashPassword(req.body.password
-//         ).then(hashPass => {
-//             db.addUser(
-//             req.body.first,
-//             req.body.last,
-//             req.body.email,
-//             hashPass
-//         ).then(pass => {
-//             req.session.userId = pass.rows[0].id;
-//             req.session.first = pass.rows[0].first;
-//             req.session.last = pass.rows[0].last;
-//             req.session.email = pass.rows[0].email;
-//             res.redirect('/profile');
-//         }).catch(error => {
-//             console.log(error);
-//         });
-//     });
-// });
+///welcome post request:
+app.post('/welcome', (req, res) => {
+        bc.hashPassword(req.body.password
+        ).then(hashPass => {
+            console.log('this is hashpass:', hashPass);
+            db.addUser(
+            req.body.first,
+            req.body.last,
+            req.body.email,
+            hashPass
+        ).then(pass => {
+            console.log('this is pass POST:', pass);
+            req.session.userId = pass.rows[0].id;
+            req.json({
+                userId: pass.rows[0].id,
+                success: true
+            })
+        }).catch(error => {
+            console.log('welcome POST:' error);
+        });
+    });
+});
+
 //all the routes we will serve JSON! only 1 route
 //will serve index.html
 //After using cookie.session We can use:
 app.get('/welcome', function(req, res) {
-    // if (!req.session.userId) {
-    //     res.redirect('/');
-    // } else {
+    if (!req.session.userId) {
+        res.redirect('/');
+    } else {
     res.sendFile(__dirname + '/index.html');
-    //}
+    }
 });
 
 app.get('*', function(req, res) {
-    // if (!req.session.userId) {
-    //     res.redirect('/welcome');
-    // } else {
+    if (!req.session.userId) {
+        res.redirect('/welcome');
+    } else {
     res.sendFile(__dirname + '/index.html');
-    //}
+    }
 });
 
 app.listen(8080, function() {console.log("I'm listening.");});
