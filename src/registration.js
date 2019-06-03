@@ -26,28 +26,29 @@ export class Registration extends React.Component {
         }).then(({ data }) => {
                 if (data.success) {
                     location.replace('/');
-                } else {
+                } else if (data.error){
                     this.setState({
-                        error: true
+                        error: data.error
                     });
                 }
-            }
-        );//axios.post close.
+            }).catch(err => {
+                console.log(err);
+                this.setState({
+                    error: true
+                });
+            });
     }//submit close.
     render() {
         return (
                 <div className="big-container">
-                    <h1>INK IT</h1>
-                    <h2>sketch IT tatoo IT share IT</h2>
                     <h3>Join the community - spread the INK</h3>
                     <div className="form-container">
-                        {this.state.error && <div className="error">please insert
-                        the right info</div>}
-                        <input name="first" type="text" placeholder="first-name" onChange={e => this.handleChange(e)} />
-                        <input name="last" type="text" placeholder="last-name" onChange={e => this.handleChange(e)} />
-                        <input name="email" type="text" placeholder="email" onChange={e => this.handleChange(e)} />
-                        <input name="password" type="password" placeholder="password" onChange={e => this.handleChange(e)} />
-                        <button onClick={e => this.submit()}>SUBMIT</button>
+                        {this.state.error}
+                        <input name="first" type="text" placeholder="first-name" required onChange={e => this.handleChange(e)} />
+                        <input name="last" type="text" placeholder="last-name" required onChange={e => this.handleChange(e)} />
+                        <input name="email" type="text" placeholder="email" required onChange={e => this.handleChange(e)} />
+                        <input name="password" type="password" placeholder="password" required onChange={e => this.handleChange(e)} />
+                        <button disabled={!this.state.password} onClick={e => this.submit()}>SUBMIT</button>
                     </div>
                     <h3>Already member?<Link to="/login"> log in</Link></h3>
                 </div>

@@ -71,9 +71,7 @@ app.post('/registration', (req, res) => {
             req.body.email,
             hashPass
         ).then(pass => {
-            console.log('this is pass POST:', pass);
             req.session.userId = pass.rows[0].id;
-            console.log('this is welcome req.session.userId:', req.session.userId);
             res.json({
                 userId: pass.rows[0].id,
                 success: true
@@ -81,13 +79,13 @@ app.post('/registration', (req, res) => {
         }).catch(err => {
             console.log('error addUser welcome POST:', err);
             res.json({
-                success: false
+                error: "oops, WRONG INFO"    
             });
         });
     }).catch(err => {
         console.log('error hashPassword welcome POST:', err);
         res.json({
-            success: false
+            error: "oops, WRONG INFO"
         });
     });
 });
@@ -96,12 +94,9 @@ app.post('/registration', (req, res) => {
 app.post('/login', (req,res) => {
         db.getUserData(req.body.email
         ).then(newPass => {
-           console.log('this is newPass :', newPass);
             bc.checkPassword(req.body.password, newPass.rows[0].password
         ).then(matchPass => {
-            console.log('this is matchPass :', matchPass);
             if (matchPass) {
-                console.log('this is check for newpass:', newPass.rows[0]);
                 req.session.userId = newPass.rows[0].id;
                 res.json({
                     userId: newPass.rows[0].id,
@@ -111,13 +106,13 @@ app.post('/login', (req,res) => {
         }).catch(err => {
             console.log('error checkPassword login ERROR:', err);
             res.json({
-                success: false
+                error: "Invalid Password"
             });
         });
     }).catch(err => {
         console.log('error getPass login error ERROR:', err);
         res.json({
-            success: false
+            error: "Invalid E-mail address"
         });
     });
 });

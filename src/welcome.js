@@ -7,8 +7,8 @@ import { Login } from './login';
 export function Welcome() {
     return (
         <div id="welcome">
-            <h1>Welcome!</h1>
-            <img src="./img/two-scarlet-macaws-Max-100.jpg" />
+            <h1>INK IT</h1>
+            <h2>sketch IT tatoo IT share IT</h2>
             <HashRouter>
                 <div>
                     <Route exact path="/" component={Registration} />

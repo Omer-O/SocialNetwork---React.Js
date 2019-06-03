@@ -6,14 +6,10 @@ import { Link } from 'react-router-dom';
 export class Login extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            email: '',
-            password: ''
-         };
+        this.state = {};
     }//constructor close.
     handleChange({ target }) {
-        this.setState({//we can target all the
-            //changes in the 'input name='
+        this.setState({
             [target.name]: target.value
         });
     }//handleChange close.
@@ -24,25 +20,28 @@ export class Login extends React.Component {
         }).then(({ data }) => {
                 if (data.success) {
                     location.replace('/');
-                } else {
-                    this.setState({
-                        error: true
+                } else if
+                    (data.error){
+                        this.setState({
+                            error: data.error
                     });
                 }
-            }
-        );//axios.post close.
+            }).catch(err => {
+                console.log(err);
+                this.setState({
+                    error: true
+                });
+            });
     }//submit close.
     render() {
         return (
                 <div className="big-container">
-                    <h1>INK IT</h1>
-                    <h2>sketch IT tatoo IT share IT</h2>
                     <h3>PLEASE LOGIN</h3>
                     <div className="form-container">
-                        {this.state.error && <div className="error">oops, WRONG INFO</div>}
-                        <input name="email" type="text" placeholder="email" onChange={e => this.handleChange(e)} />
-                        <input name="password" type="password" placeholder="password" onChange={e => this.handleChange(e)} />
-                        <button onClick={e => this.submit()}>LOGIN</button>
+                        {this.state.error}
+                        <input name="email" type="text" placeholder="email" required onChange={e => this.handleChange(e)} />
+                        <input name="password" type="password" placeholder="password" required onChange={e => this.handleChange(e)} />
+                        <button disabled={!this.state.password} onClick={e => this.submit()}>LOGIN</button>
                     </div>
                     <h3><Link to="/registration">Registration</Link></h3>
                 </div>
