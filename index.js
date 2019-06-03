@@ -58,16 +58,8 @@ if (process.env.NODE_ENV != 'production') {
 } else {
     app.use('/bundle.js', (req, res) => res.sendFile(`${__dirname}/bundle.js`));
 }
-///////////////// welcome page ///////////////////
-app.get("/", function(req, res) {
-    if (req.session.userId) {
-        res.sendFile(__dirname + "/index.html");
-    } else {
-        res.redirect("/registration");
-    }
-});
 
-///welcome post request:
+//////////// registration post request:
 app.post('/registration', (req, res) => {
     console.log('this is welcome req.body', req.body);
     console.log('req.body.password :', req.body.password);
@@ -101,17 +93,53 @@ app.post('/registration', (req, res) => {
     });
 });
 
+///////////////// login post request ////////////
+app.post('/login', (req,res) => {
+        db.getUserData(req.body.email
+        ).then(newPass => {
+           console.log('this is newPass :', newPass);
+            bc.checkPassword(req.body.password, newPass.rows[0].password
+        ).then(matchPass => {
+            console.log('this is matchPass :', matchPass);
+            if (matchPass) {
+                console.log('this is check for newpass:', newPass.rows[0]);
+                req.session.userId = newPass.rows[0].id;
+                res.json({
+                    userId: newPass.rows[0].id,
+                    success: true
+                });
+            }
+        }).catch(err => {
+            console.log('error checkPassword login ERROR:', err);
+            res.json({
+                success: false
+            });
+        });
+    }).catch(err => {
+        console.log('error getPass login error ERROR:', err);
+        res.json({
+            success: false
+        });
+    });
+});
+
+///////////////// logOut page /////////////////////////////
+app.get('/logout', (req,res) => {
+    req.session = null;
+    res.redirect('/login');
+});
+
 app.get("*", function(req, res) {
     res.sendFile(__dirname + "/index.html");
 });
 //all the routes we will serve JSON! only 1 route
 //will serve index.html
 //After using cookie.session We can use:
-// app.get('/welcome', function(req, res) {
-//     // if (!req.session.userId) {
+// app.get('*', function(req, res) {
+//     if (!req.session.userId) {
 //         res.redirect('/');
-//     // } else {
+//     } else {
 //     res.sendFile(__dirname + '/index.html');
-//     // }
+//     }
 // });
 app.listen(8080, function() {console.log("I'm listening.");});

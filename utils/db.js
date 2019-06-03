@@ -15,6 +15,16 @@ module.exports.addUser = function addUser(firstName, lastName, email, password) 
 }
 
 //get password:
-module.exports.getPass = function getPass(email) {
-    return db.query(`SELECT password FROM users WHERE email=$1`, [email]);
+module.exports.getUserData = function getUserData(email) {
+    return db.query(`SELECT * FROM users WHERE email=$1`, [email]);
 };
+// module.exports.user = function user(email) {
+//     return db.query(
+//         `SELECT email, password, city, age, url, first, last, signatures.signature, users.id AS user_id, signatures.id AS sign_id
+//         FROM users
+//         LEFT OUTER JOIN signatures ON users.id = signatures.user_id
+//         LEFT OUTER JOIN profile ON users.id = profile.user_id
+//         WHERE email=$1`,
+//         [email]
+//     );
+// };
