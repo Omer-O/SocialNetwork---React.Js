@@ -10,26 +10,25 @@ const uidSafe = require('uid-safe');
 const csurf = require('csurf');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
-const compression = require('compression');//compress the responses
-//that cant be compresed - like jsep middleware - GET from the server
-// compressed files which are always necessary!
+const compression = require('compression');
 app.use(compression());
 
-app.use(bodyParser.json());
-
-app.use(cookieSession({ //this code create a session with the cookie.
-    secret: `I'm always angry.`,
-    maxAge: 1000 * 60 * 60 * 24 * 14
-}));
+app.use(express.static('./public'));
 
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
-// app.use(csurf());
+//app.use(csurf());
 // app.use((req, res, next) => {
 // res.locals.csrfToken = req.csrfToken();
 //      // res.setHeader('X-FRAME-OPTIONS', 'DENY');
 //     next();
 // });
+
+app.use(cookieSession({
+    secret: `I'm always angry.`,
+    maxAge: 1000 * 60 * 60 * 24 * 14
+}));
 
 var diskStorage = multer.diskStorage({
     destination: function (req, file, callback) {
@@ -49,8 +48,6 @@ var uploader = multer({
     }
 });
 
-app.use(express.static('./public'));
-
 if (process.env.NODE_ENV != 'production') {
     app.use(
         '/bundle.js',
@@ -61,12 +58,19 @@ if (process.env.NODE_ENV != 'production') {
 } else {
     app.use('/bundle.js', (req, res) => res.sendFile(`${__dirname}/bundle.js`));
 }
-///////////////// regestration page /////////////////////////////
-// app.get("/welcome", (req, res) => {
-//     res.render("/welcome");
-// });
+///////////////// welcome page ///////////////////
+app.get("/", function(req, res) {
+    if (req.session.userId) {
+        res.sendFile(__dirname + "/index.html");
+    } else {
+        res.redirect("/registration");
+    }
+});
+
 ///welcome post request:
-app.post('/welcome', (req, res) => {
+app.post('/registration', (req, res) => {
+    console.log('this is welcome req.body', req.body);
+    console.log('req.body.password :', req.body.password);
         bc.hashPassword(req.body.password
         ).then(hashPass => {
             console.log('this is hashpass:', hashPass);
@@ -78,33 +82,36 @@ app.post('/welcome', (req, res) => {
         ).then(pass => {
             console.log('this is pass POST:', pass);
             req.session.userId = pass.rows[0].id;
-            req.json({
+            console.log('this is welcome req.session.userId:', req.session.userId);
+            res.json({
                 userId: pass.rows[0].id,
                 success: true
             })
-        }).catch(error => {
-            console.log('welcome POST:' error);
+        }).catch(err => {
+            console.log('error addUser welcome POST:', err);
+            res.json({
+                success: false
+            });
+        });
+    }).catch(err => {
+        console.log('error hashPassword welcome POST:', err);
+        res.json({
+            success: false
         });
     });
 });
 
+app.get("*", function(req, res) {
+    res.sendFile(__dirname + "/index.html");
+});
 //all the routes we will serve JSON! only 1 route
 //will serve index.html
 //After using cookie.session We can use:
-app.get('/welcome', function(req, res) {
-    if (!req.session.userId) {
-        res.redirect('/');
-    } else {
-    res.sendFile(__dirname + '/index.html');
-    }
-});
-
-app.get('*', function(req, res) {
-    if (!req.session.userId) {
-        res.redirect('/welcome');
-    } else {
-    res.sendFile(__dirname + '/index.html');
-    }
-});
-
+// app.get('/welcome', function(req, res) {
+//     // if (!req.session.userId) {
+//         res.redirect('/');
+//     // } else {
+//     res.sendFile(__dirname + '/index.html');
+//     // }
+// });
 app.listen(8080, function() {console.log("I'm listening.");});

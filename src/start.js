@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios'; //we will need it probably later on
-import {Welcome} from './welcome';
+import { Registration } from './registration';
 
 let elem;
 
 if (location.pathname == '/welcome') {
-    elem = <Welcome />
+    elem = <Registration />
 } else {
     elem = <img src="./img/two-scarlet-macaws-Max-100.jpg" />
 }
