@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import axios from 'axios'; //we will need it probably later on
+
 import { Welcome } from './welcome';
 
 let elem;

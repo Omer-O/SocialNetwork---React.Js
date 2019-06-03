@@ -14,21 +14,20 @@ const compression = require('compression');
 app.use(compression());
 
 app.use(express.static('./public'));
-
-app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-//app.use(csurf());
-// app.use((req, res, next) => {
-// res.locals.csrfToken = req.csrfToken();
-//      // res.setHeader('X-FRAME-OPTIONS', 'DENY');
-//     next();
-// });
-
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieSession({
     secret: `I'm always angry.`,
     maxAge: 1000 * 60 * 60 * 24 * 14
 }));
+
+app.use(csurf());
+
+app.use(function(req, res, next){
+    res.cookie('mytoken', req.csrfToken());
+    next();
+});
 
 var diskStorage = multer.diskStorage({
     destination: function (req, file, callback) {
@@ -126,7 +125,7 @@ app.post('/login', (req,res) => {
 ///////////////// logOut page /////////////////////////////
 app.get('/logout', (req,res) => {
     req.session = null;
-    res.redirect('/login');
+    res.redirect('/#/login');
 });
 
 app.get("*", function(req, res) {
