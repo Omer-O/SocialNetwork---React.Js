@@ -119,18 +119,17 @@ app.post('/login', (req,res) => {
 //////////////////// upload picture ////////////////////////////
 app.post('/user-image', uploader.single('file'),
         s3.upload, function(req, res) {
-            let { id, imageUrl } = req.body;
-            id = req.session.userId;
-            let url = "https://s3.amazonaws.com/spicedling/" + req.file.filename;
-            db.updateUserImg(id, imageUrl)
+            console.log('user-image req.body', req.body);
+            let imageUrl = "https://s3.amazonaws.com/spicedling/" + req.file.filename;
+            db.updateUserImg(req.session.userId, imageUrl)
                 .then(result => {
-                    const image = {
+                    console.log('result of updateUserImg:', result);
+                    res.json({
                         id: result.rows[0].id,
-                        imageUrl: imageUrl,
+                        imageUrl: result.rows[0].imageUrl,
+                        first: result.rows[0].first,
                         success: true
-                        }
-                        console.log('image:', image);
-                        res.json(image);
+                    });
                 }).catch(err => {
                     console.log('updateUserImg ERROR:', err);
                     res.json({
@@ -140,6 +139,7 @@ app.post('/user-image', uploader.single('file'),
 });//uploader.single function close
 ///////////////// logOut page /////////////////////////////
 app.get('/user', (req, res) => {
+    console.log('req.session.userId :', req.session.userId);
     if (!req.session.userId) {
         res.redirect('/login');
     } else {

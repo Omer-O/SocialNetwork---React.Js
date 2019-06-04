@@ -21,13 +21,18 @@ export class App extends React.Component {
     render() {
         if (!this.state.id) {
             return (
-            <img src="img/profilepic.jpg" width="200" height="200" />
+            <img src="img/profilepic.jpg"
+                className="user-img"
+            />
             )
         }
         return (
-            <div>
-                <img src="/img/logo.png" />
+            <div className="site-container">
+                <img src="img/logo.png"
+                 className="logo-image"
+                />
                 <Profilepic
+                className="user-img"
                 imageUrl={this.state.imageUrl}
                 first={this.state.first}
                 clickHandler={e => this.setState({

@@ -26,7 +26,7 @@ export class Uploader extends React.Component {
         const formData = new FormData();
         formData.append('file', this.state.selectedFile)
 
-        axios.post('/user-image', data)
+        axios.post('/user-image', formData)
              .then(({ data }) => {
                 if (data.success) {
                     location.replace('/');
@@ -45,10 +45,15 @@ export class Uploader extends React.Component {
     render() {
         return (
         <div className="form-container">
-            <Logo />
             {this.state.error}
-            <input className='browse-btn' type="file" name="file" onChange={(e => this.handleChange(e))} />
-            <button onClick={(e => this.uploadFile(e))} >UPLOAD</button>
+            <button className="upload-btn"
+             onClick={(e => this.uploadFile(e))}
+             >UPLOAD</button>
+            <input className='browse-btn'
+             type="file"
+             name="file"
+             onChange={(e => this.handleChange(e))}
+            />
         </div>
         )//render-return close.
     }//render close.

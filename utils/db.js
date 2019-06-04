@@ -28,7 +28,8 @@ module.exports.updateUserImg = function updateUserImg(id, imgUrl) {
     return db.query(`
         UPDATE users
         SET url=$2
-        WHERE id=$1`, [id, imgUrl]);
+        WHERE id=$1
+        RETURNING id, first, url`, [id, imgUrl]);
 }
 
 module.exports.updateUserBio = function updateUserBio(id, bio) {

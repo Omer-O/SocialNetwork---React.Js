@@ -4,7 +4,6 @@ body {
     line-height: 1.5;
     color: #222326;
     background: rgba(158, 158, 158, 0.39);
-
 }
 
 img {
@@ -12,6 +11,11 @@ img {
     border: 5px solid black;
     margin: 0 auto;
 }
+/*
+.profile-image {
+    width: 50px;
+    height: 50px;
+} */
 
 h1 {
     font-size: 3em;
@@ -36,16 +40,46 @@ h3 {
 }
 
 .form-container {
-    margin: 35px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    margin: 0 auto;
 }
 
-#canvas {
-    border: dashed;
-    box-shadow: 0 7px 14px rgba(0, 0, 0, 0.18), 0 5px 5px rgba(0, 0, 0, 0.12);
-    background: #c3cdb0b5;
+.form-container input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+.upload-btn {
+  border: 2px solid gray;
+  color: gray;
+  background-color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.site-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+img.user-img {
+    border-radius: 100%;
+    position: absolute;
+    right: 0;
+    height: 250px;
+    width: 250px;
+}
+
+img.logo-image {
+    position: absolute;
 }
 
 p {
@@ -109,7 +143,6 @@ button:hover {
      color: lightgrey;
          box-shadow: 0 7px 14px rgb(219, 0, 0), 0 5px 5px rgba(0, 0, 0, 0.12);
   }
-
 
 ul {
     list-style: none;
