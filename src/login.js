@@ -13,7 +13,8 @@ export class Login extends React.Component {
             [target.name]: target.value
         });
     }//handleChange close.
-    submit() {
+    submit(e) {
+        e.preventDefault();
         axios.post('/login', {
             email: this.state.email,
             password: this.state.password
@@ -41,7 +42,7 @@ export class Login extends React.Component {
                         {this.state.error}
                         <input name="email" type="text" placeholder="email" required onChange={e => this.handleChange(e)} />
                         <input name="password" type="password" placeholder="password" required onChange={e => this.handleChange(e)} />
-                        <button disabled={!this.state.password} onClick={e => this.submit()}>LOGIN</button>
+                        <button disabled={!this.state.password} onClick={e => this.submit(e)}>LOGIN</button>
                     </div>
                     <h3><Link to="/registration">Registration</Link></h3>
                 </div>

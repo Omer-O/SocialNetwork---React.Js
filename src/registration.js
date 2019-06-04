@@ -5,19 +5,15 @@ import { Link } from 'react-router-dom';
 export class Registration extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            first: '',
-            last: '',
-            email: '',
-            password: ''
-         };
+        this.state = {};
     }//constructor close.
     handleChange({ target }) {
         this.setState({
             [target.name]: target.value
         });
     }//handleChange close.
-    submit() {
+    submit(e) {
+        e.preventDefault();
         axios.post('/registration', {
             first: this.state.first,
             last: this.state.last,
@@ -25,6 +21,7 @@ export class Registration extends React.Component {
             password: this.state.password
         }).then(({ data }) => {
                 if (data.success) {
+                    console.log('we are in registration if');
                     location.replace('/');
                 } else if (data.error){
                     this.setState({
@@ -46,9 +43,9 @@ export class Registration extends React.Component {
                         {this.state.error}
                         <input name="first" type="text" placeholder="first-name" required onChange={e => this.handleChange(e)} />
                         <input name="last" type="text" placeholder="last-name" required onChange={e => this.handleChange(e)} />
-                        <input name="email" type="text" placeholder="email" required onChange={e => this.handleChange(e)} />
+                        <input name="email" type="email" placeholder="email" required onChange={e => this.handleChange(e)} />
                         <input name="password" type="password" placeholder="password" required onChange={e => this.handleChange(e)} />
-                        <button disabled={!this.state.password} onClick={e => this.submit()}>SUBMIT</button>
+                        <button disabled={!this.state.password} onClick={e => this.submit(e)}>SUBMIT</button>
                     </div>
                     <h3>Already member?<Link to="/login"> log in</Link></h3>
                 </div>

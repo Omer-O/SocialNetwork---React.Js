@@ -3,14 +3,14 @@ body {
     font-family: 'Roboto Mono', monospace;
     line-height: 1.5;
     color: #222326;
-    background: #addeba;
+    background: rgba(158, 158, 158, 0.39);
 
 }
 
 img {
-    width: 33%;
-    background: #9acd3287;
+    display: flex;
     border: 5px solid black;
+    margin: 0 auto;
 }
 
 h1 {

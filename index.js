@@ -79,7 +79,7 @@ app.post('/registration', (req, res) => {
         }).catch(err => {
             console.log('error addUser welcome POST:', err);
             res.json({
-                error: "oops, WRONG INFO"    
+                error: "oops, WRONG INFO"
             });
         });
     }).catch(err => {
@@ -92,7 +92,7 @@ app.post('/registration', (req, res) => {
 
 ///////////////// login post request ////////////
 app.post('/login', (req,res) => {
-        db.getUserData(req.body.email
+        db.getUserDataByMail(req.body.email
         ).then(newPass => {
             bc.checkPassword(req.body.password, newPass.rows[0].password
         ).then(matchPass => {
@@ -116,11 +116,58 @@ app.post('/login', (req,res) => {
         });
     });
 });
-
+//////////////////// upload picture ////////////////////////////
+app.post('/user-image', uploader.single('file'),
+        s3.upload, function(req, res) {
+            let { id, imageUrl } = req.body;
+            id = req.session.userId;
+            let url = "https://s3.amazonaws.com/spicedling/" + req.file.filename;
+            db.updateUserImg(id, imageUrl)
+                .then(result => {
+                    const image = {
+                        id: result.rows[0].id,
+                        imageUrl: imageUrl,
+                        success: true
+                        }
+                        console.log('image:', image);
+                        res.json(image);
+                }).catch(err => {
+                    console.log('updateUserImg ERROR:', err);
+                    res.json({
+                        error: "Upload failed"
+                    });
+                });
+});//uploader.single function close
 ///////////////// logOut page /////////////////////////////
+app.get('/user', (req, res) => {
+    if (!req.session.userId) {
+        res.redirect('/login');
+    } else {
+        db.getUserDataById(req.session.userId)
+        .then(result => {
+            const userData = result.rows[0];
+                console.log('image:', userData);
+                res.json({
+                    id: userData.id,
+                    first: userData.first,
+                    last: userData.last,
+                    imageUrl: userData.url,
+                    bio: userData.bio,
+                    success: true
+                });
+        }).catch(err => {
+            console.log('getUserDataById ERROR:', err);
+            // res.json({
+            //     error: "Upload failed"
+            // });
+        });
+    }
+});
+
+
 app.get('/logout', (req,res) => {
     req.session = null;
-    res.redirect('/#/login');
+    res.redirect('/welcome');
 });
 
 app.get("*", function(req, res) {
