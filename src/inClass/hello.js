@@ -28,7 +28,7 @@
 //                     //     //whatever we type in the input.
 //                     //     this.setState({
 //                     //         name: e.target.value
-//                     //     });//jere we let the input dinamicaly
+//                     //     });//here we let the input dinamicaly
 //                         //change the h1 with whatever the user types!
 //                     }} />
 //                     //#2 way:

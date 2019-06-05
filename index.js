@@ -60,11 +60,11 @@ if (process.env.NODE_ENV != 'production') {
 
 //////////// registration post request:
 app.post('/registration', (req, res) => {
-    console.log('this is welcome req.body', req.body);
-    console.log('req.body.password :', req.body.password);
+    //console.log('this is welcome req.body', req.body);
+    //console.log('req.body.password :', req.body.password);
         bc.hashPassword(req.body.password
         ).then(hashPass => {
-            console.log('this is hashpass:', hashPass);
+            //console.log('this is hashpass:', hashPass);
             db.addUser(
             req.body.first,
             req.body.last,
@@ -126,7 +126,7 @@ app.post('/user-image', uploader.single('file'),
                     console.log('result of updateUserImg:', result);
                     res.json({
                         id: result.rows[0].id,
-                        imageUrl: result.rows[0].imageUrl,
+                        imageUrl: result.rows[0].url,
                         first: result.rows[0].first,
                         success: true
                     });
@@ -137,7 +137,30 @@ app.post('/user-image', uploader.single('file'),
                     });
                 });
 });//uploader.single function close
-///////////////// logOut page /////////////////////////////
+///////////////// bio update page /////////////////////////////
+app.post('/bio', (req, res) => {
+    console.log('this is BIO POST req.session', req.session.userId);
+        console.log('this is BIO POST req.body', req.body);
+    let user = req.session.userId;
+    let bio = req.body.bio;
+    db.updateUserBio(user, bio).then(result => {
+        console.log('result of updateUserBio:', result);
+        res.json({
+            id: result.rows[0].id,
+            imageUrl: result.rows[0].url,
+            first: result.rows[0].first,
+            bio: result.rows[0].bio,
+            success: true
+        });
+    }).catch(err => {
+        console.log('updateUserBio BIO ERROR:', err);
+        res.json({
+            error: "Update info failed"
+        });
+    });
+});//app.post('/bio') close.
+
+////// get user ////////////////
 app.get('/user', (req, res) => {
     console.log('req.session.userId :', req.session.userId);
     if (!req.session.userId) {
@@ -164,7 +187,7 @@ app.get('/user', (req, res) => {
     }
 });
 
-
+//////////////// log out //////////////
 app.get('/logout', (req,res) => {
     req.session = null;
     res.redirect('/welcome');
