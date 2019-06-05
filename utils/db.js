@@ -37,5 +37,5 @@ module.exports.updateUserBio = function updateUserBio(id, bio) {
         UPDATE users
         SET bio=$2
         WHERE id=$1, );
-        RETURNING id, first, url, bio`, [id, bio]);
+        RETURNING id, first, last, url, bio`, [id, bio]);
 }

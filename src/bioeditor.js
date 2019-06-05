@@ -8,8 +8,9 @@ export class BioEditor extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            editBio: false
+
         };
+        editBio: false
         this.handleClick = this.handleClick.bind(this);
         this.saveBio = this.saveBio.bind(this);
     }//constructor close.
@@ -29,7 +30,8 @@ export class BioEditor extends React.Component {
             bio: this.state.bio,
         }).then(result => {
             console.log('this is result of bioeditor:', result);
-            //this.props.bioEdit(result.data.bio);
+            this.props.bioEdit(result.data.bio);
+            this.setState({ editBio: false })
             }).catch(err => {
                 console.log(err);
                 this.setState({
@@ -48,6 +50,7 @@ export class BioEditor extends React.Component {
             <textarea className='text-field'
              type="text"
              name="bio"
+             value={this.props.bio}
              cols="50"
              row='4'
              onChange={e => this.handleChange(e)}

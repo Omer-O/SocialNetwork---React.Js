@@ -34,8 +34,8 @@ export class App extends React.Component {
     }//showUpload close.
     bioEdit(bio) {
         this.setState({
-            bio: bio
-            // bioEditVisible: false
+            bio: bio,
+            bioEditVisible: false
         });
     }//bioEdit close.
     componentDidMount() {
