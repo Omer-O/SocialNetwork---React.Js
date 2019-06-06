@@ -6,16 +6,6 @@ body {
     background: rgba(158, 158, 158, 0.39);
 }
 
-img {
-    display: flex;
-    border: 5px solid black;
-}
-/*
-.profile-image {
-    width: 50px;
-    height: 50px;
-} */
-
 h1 {
     font-size: 3em;
     font-weight: 300;
@@ -39,19 +29,8 @@ h3 {
 }
 
 .form-container {
-    position: relative;
-    overflow: hidden;
-    display: inline-block;
-    margin: 0 auto;
+    margin-left: 100px;
 }
-
-/* .form-container input[type=file] {
-  font-size: 100px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  opacity: 0;
-} */
 
 .upload-btn {
   border: 2px solid gray;
@@ -63,26 +42,27 @@ h3 {
   font-weight: bold;
 }
 
-.site-container {
+.wraper-header {
     border-bottom: solid 5px black;
+    height: 250px;
     display: flex;
     flex-direction: row;
     align-items: flex-start;
     justify-content: space-between;
 }
 
-.body-container {
+.wraper-app {
     margin-top: 100px;
     margin-left: 50px;
 }
 
-button.save-btn {
-    margin-left: 100px;
+.wraper-profile {
+    display: flex;
 }
 
-textarea.text-field {
-    margin-left: 100px;
-    width: 100%;
+img {
+    display: flex;
+    border: 5px solid black;
 }
 
 img.user-img {
@@ -91,10 +71,6 @@ img.user-img {
     height: 200px;
     width: 200px;
 }
-
-/* img.logo-image {
-    position: absolute;
-} */
 
 p {
     font-family: 'Roboto Mono', monospace;
@@ -109,6 +85,11 @@ p {
 form {
     width: 310px;
     margin: 177px;
+}
+
+textarea.text-field {
+    width: 300px;
+    opacity: 0.5;
 }
 
 input,
@@ -153,10 +134,15 @@ button:hover {
     box-shadow: 0 7px 14px rgba(0, 0, 0, 0.18), 0 5px 5px rgba(0, 0, 0, 0.12);
  }
 
- button:disabled {
-     color: lightgrey;
-         box-shadow: 0 7px 14px rgb(219, 0, 0), 0 5px 5px rgba(0, 0, 0, 0.12);
-  }
+button:disabled {
+  color: lightgrey;
+  box-shadow: 0 7px 14px rgb(219, 0, 0), 0 5px 5px rgba(0, 0, 0, 0.12);
+}
+
+
+button.save-btn {
+  margin-left: 100px;
+}
 
 ul {
     list-style: none;

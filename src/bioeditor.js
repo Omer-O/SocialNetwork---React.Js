@@ -45,13 +45,14 @@ export class BioEditor extends React.Component {
                  {this.state.error}
                     <div className="bio-container">
                         <h2>PERSONAL INFORMATION</h2>
-                        <div className="edit-bio"
+                        <div className="edit-click"
                          onClick={e => this.handleClick(e)}
-                         >edit</div>
-                        <div className="scnd-click"
-                        onClick={e => this.handleSecondClick(e)}
+                        >edit</div>
+                        <div className="close-click"
+                         onClick={e => this.handleSecondClick(e)}
                         >close</div>
-                        <p>{this.state.bio}</p>
+                        <p className ="bio-field"
+                        >{this.props.bio}</p>
                     </div>
                 {this.state.editBio &&
                     <textarea className='text-field'

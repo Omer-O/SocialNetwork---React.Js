@@ -13,9 +13,9 @@ export class Profile extends React.Component {
     }//constructor close.
     render() {
         return (
-            <div className="profile-container">
+            <div className="wraper-profile">
                 <Profilepic
-                    className="user-logo-img"
+                    className="user-img"
                     imageUrl={this.props.imageUrl}
                     first={this.props.first}
                     last={this.props.last}

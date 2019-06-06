@@ -119,11 +119,11 @@ app.post('/login', (req,res) => {
 //////////////////// upload picture ////////////////////////////
 app.post('/user-image', uploader.single('file'),
         s3.upload, function(req, res) {
-            console.log('user-image req.body', req.body);
+            //console.log('user-image req.body', req.body);
             let imageUrl = "https://s3.amazonaws.com/spicedling/" + req.file.filename;
             db.updateUserImg(req.session.userId, imageUrl)
                 .then(result => {
-                    console.log('result of updateUserImg:', result);
+                    //console.log('result of updateUserImg:', result);
                     res.json({
                         id: result.rows[0].id,
                         imageUrl: result.rows[0].url,
@@ -139,12 +139,12 @@ app.post('/user-image', uploader.single('file'),
 });//uploader.single function close
 ///////////////// bio update page /////////////////////////////
 app.post('/bio', (req, res) => {
-    console.log('this is BIO POST req.session', req.session.userId);
-        console.log('this is BIO POST req.body', req.body);
+//console.log('this is BIO POST req.session', req.session.userId);
+//console.log('this is BIO POST req.body', req.body);
     let user = req.session.userId;
     let bio = req.body.bio;
     db.updateUserBio(user, bio).then(result => {
-        console.log('result of updateUserBio:', result);
+        //console.log('result of updateUserBio:', result);
         res.json({
             id: result.rows[0].id,
             imageUrl: result.rows[0].url,
@@ -159,17 +159,16 @@ app.post('/bio', (req, res) => {
         });
     });
 });//app.post('/bio') close.
-
 ////// get user ////////////////
 app.get('/user', (req, res) => {
-    console.log('req.session.userId :', req.session.userId);
+    //console.log('req.session.userId :', req.session.userId);
     if (!req.session.userId) {
         res.redirect('/login');
     } else {
         db.getUserDataById(req.session.userId)
         .then(result => {
             const userData = result.rows[0];
-                console.log('image:', userData);
+                //console.log('image:', userData);
                 res.json({
                     id: userData.id,
                     first: userData.first,
@@ -186,8 +185,21 @@ app.get('/user', (req, res) => {
         });
     }
 });
-
-//////////////// log out //////////////
+/////////////////////// GET /user/:id /////////
+app.get("/otheruser/:id", (req, res) => {
+    console.log("/user/:id.json :", req.params.id);
+    db.getUserDataById(req.params.id)
+        .then(result => {
+            res.json(result.rows[0]);
+        })
+        .catch(err => {
+            console.log('getUserDataById ERROR:', err);
+            res.json({
+                error: "upload failed"
+            });
+        });
+});
+//////////////// GET log out //////////////
 app.get('/logout', (req,res) => {
     req.session = null;
     res.redirect('/welcome');
