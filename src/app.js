@@ -45,14 +45,14 @@ export class App extends React.Component {
     render() {
         if (!this.state.id) {
             return (
-            <img src="img/profilepic.jpg"
+            <img src="/img/profilepic.jpg"
                 className="user-img" />
             )
         }
         return (
             <div className="wraper-app">
                 <header className="wraper-header">
-                    <img src="img/logo.png"
+                    <img src="/img/logo.png"
                         className="logo-image"
                     />
                     <Profilepic
@@ -75,7 +75,7 @@ export class App extends React.Component {
                                         id={this.state.id}
                                         first={this.state.first}
                                         last={this.state.last}
-                                        image={this.state.image}
+                                        imageUrl={this.state.imageUrl}
                                         onClick={this.showUpload}
                                         bio={this.state.bio}
                                         bioEdit={this.bioEdit}

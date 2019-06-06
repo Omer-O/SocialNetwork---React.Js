@@ -7,7 +7,9 @@ import { Login } from './login';
 export function Welcome() {
     return (
         <div id="welcome">
-            <img src="./img/logo.png" />
+            <img src="/img/logo.png"
+             className="logo-welcome"
+            />
             <h2>SKETCH it INK it SHARE it</h2>
             <HashRouter>
                 <div>

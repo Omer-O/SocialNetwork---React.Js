@@ -10,22 +10,23 @@ export class OtherProfile extends React.Component {
     }//constructor close.
     componentDidMount() {
         axios.get('/otheruser/' + this.props.match.params.id)
-            .then(({ data }) => {
-                console.log('this is data of api user:', data);
+            .then(({data}) => {
                 if (data.error) {
                     this.props.history.push("/");
                 } else {
+                    console.log('this is data of otheruser:', data);
                     this.setState(data);
                 }
-        });
+            }).catch(err => {
+                console.log(err);
+                this.setState({ error: true });
+            });
     }//componentDidMount close.
     render() {
         return (
             <div className="wraper-app">
+            {this.state.error}
                 <header className="site-container">
-                    <img src="img/logo.png"
-                        className="logo-image"
-                    />
                     <Profilepic
                         className="user-img"
                         imageUrl={this.state.url}
