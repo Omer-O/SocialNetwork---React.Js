@@ -36,6 +36,6 @@ module.exports.updateUserBio = function updateUserBio(id, bio) {
     return db.query(`
         UPDATE users
         SET bio=$2
-        WHERE id=$1, );
+        WHERE id=$1
         RETURNING id, first, last, url, bio`, [id, bio]);
 }

@@ -64,10 +64,16 @@ h3 {
 }
 
 .site-container {
+    border-bottom: solid 5px black;
     display: flex;
     flex-direction: row;
     align-items: flex-start;
     justify-content: space-between;
+}
+
+.body-container {
+    margin-top: 100px;
+    margin-left: 50px;
 }
 
 button.save-btn {
@@ -76,13 +82,14 @@ button.save-btn {
 
 textarea.text-field {
     margin-left: 100px;
+    width: 100%;
 }
 
 img.user-img {
     border-radius: 100%;
     display: inline-flex;
-    height: 250px;
-    width: 250px;
+    height: 200px;
+    width: 200px;
 }
 
 /* img.logo-image {
