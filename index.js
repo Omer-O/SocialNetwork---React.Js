@@ -89,7 +89,6 @@ app.post('/registration', (req, res) => {
         });
     });
 });
-
 ///////////////// login post request ////////////
 app.post('/login', (req,res) => {
         db.getUserDataByMail(req.body.email
@@ -199,24 +198,30 @@ app.get("/otheruser/:id", (req, res) => {
                 error: "USER WAS NOT FOUND"
             });
         });
-});
+});//getUserDataById close.
+/////////////////////// GET /users /////////
+app.get("/users", (req, res) => {
+    console.log("/users", req.body);
+    db.selectUsers()
+        .then(result => {
+            console.log('this is result selectUsers', result);
+            res.json(result.rows[0]);
+        })
+        .catch(err => {
+            console.log('selectUsers ERROR:', err);
+            res.json({
+                error: "USER WAS NOT FOUND"
+            });
+        });
+});//selectUsers close.
 //////////////// GET log out //////////////
 app.get('/logout', (req,res) => {
     req.session = null;
     res.redirect('/welcome');
-});
-
+});//logout close.
+//////////////// GET * //////////////
 app.get("*", function(req, res) {
     res.sendFile(__dirname + "/index.html");
-});
-//all the routes we will serve JSON! only 1 route
-//will serve index.html
-//After using cookie.session We can use:
-// app.get('*', function(req, res) {
-//     if (!req.session.userId) {
-//         res.redirect('/');
-//     } else {
-//     res.sendFile(__dirname + '/index.html');
-//     }
-// });
+});//* close.
+
 app.listen(8080, function() {console.log("I'm listening.");});

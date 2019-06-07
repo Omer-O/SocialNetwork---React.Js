@@ -7,6 +7,7 @@ import { BioEditor } from './bioeditor';
 import { Profile } from './profile';
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import { OtherProfile } from './otherprofile';
+import { FindPeople } from './findpeople';
 //in the render of app we will pass the browser router inside we will pass the profile and than we render a componenet name OtherProfile.
 
 //All the routes must be inside BrowserRouter
@@ -49,12 +50,13 @@ export class App extends React.Component {
                 className="user-img" />
             )
         }
-        return (
+        console.log('this.state of app:', this.state);
+    return (
+        <BrowserRouter>
             <div className="wraper-app">
                 <header className="wraper-header">
                     <img src="/img/logo.png"
-                        className="logo-image"
-                    />
+                        className="logo-image"/>
                     <Profilepic
                         className="user-img"
                         imageUrl={this.state.imageUrl}
@@ -65,11 +67,8 @@ export class App extends React.Component {
                  </header>
                  {this.state.uploaderVisible &&
                   <Uploader uploaded={this.uploaded} />}
-                    <BrowserRouter>
                         <div>
-                            <Route
-                                exact
-                                path="/"
+                            <Route exact path="/"
                                 render={() => (
                                     <Profile
                                         id={this.state.id}
@@ -80,12 +79,15 @@ export class App extends React.Component {
                                         bio={this.state.bio}
                                         bioEdit={this.bioEdit}
                                     />
-                                )}
-                            />
+                                )} />
                             <Route path="/user/:id" component={OtherProfile} />
-                        </div>
-                    </BrowserRouter>
-             </div>
+
+                            <Route exact path="/findusers" render={() => (
+                                <FindPeople />
+                                )} />
+                         </div>
+                   </div>
+           </BrowserRouter>
         );
     }//render close.
 }//App close.

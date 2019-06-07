@@ -3,6 +3,7 @@ import axios from './axios';
 import { BioEditor } from './bioeditor';
 import { Profilepic } from './profilepic';
 
+
 export class OtherProfile extends React.Component {
     constructor() {
         super();
@@ -26,19 +27,19 @@ export class OtherProfile extends React.Component {
         return (
             <div className="wraper-app">
             {this.state.error}
-                <header className="site-container">
-                    <Profilepic
-                        className="user-img"
-                        imageUrl={this.state.url}
-                        first={this.state.first}
-                        last={this.state.last}
-                    />
-                 </header>
-                 <div className="wraper-profile">
-                    <div className="bio-container">
+                <div className="profile-container">
+                    <div className="profile-pic-container">
+                        <Profilepic
+                            className="user-img"
+                            imageUrl={this.state.url}
+                            first={this.state.first}
+                            last={this.state.last}
+                        />
                         {this.state.first} {this.state.last}
                     </div>
-                    <p className ="bio-field">{this.state.bio}</p>
+                    <div className="bio-container">
+                        <p className ="bio-field">{this.state.bio}</p>
+                    </div>
                  </div>
             </div>
         );

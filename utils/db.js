@@ -13,16 +13,16 @@ module.exports.addUser = function addUser(firstName, lastName, email, password) 
          RETURNING id;`,
          [firstName || null, lastName || null, email|| null, password || '']
      );
-}
+}//addUser close.
 
 //get password:
 module.exports.getUserDataByMail = function getUserDataByMail(email) {
     return db.query(`SELECT * FROM users WHERE email=$1`, [email]);
-};//
+};//getUserDataByMail close.
 
 module.exports.getUserDataById = function getUserDataById(userId) {
     return db.query(`SELECT * FROM users WHERE id=$1`, [userId]);
-};
+};//getUserDataById close.
 
 module.exports.updateUserImg = function updateUserImg(id, imgUrl) {
     return db.query(`
@@ -30,7 +30,7 @@ module.exports.updateUserImg = function updateUserImg(id, imgUrl) {
         SET url=$2
         WHERE id=$1
         RETURNING id, first, url`, [id, imgUrl]);
-}
+}//updateUserImg close.
 
 module.exports.updateUserBio = function updateUserBio(id, bio) {
     return db.query(`
@@ -38,4 +38,19 @@ module.exports.updateUserBio = function updateUserBio(id, bio) {
         SET bio=$2
         WHERE id=$1
         RETURNING id, first, last, url, bio`, [id, bio]);
-}
+}//updateUserBio close.
+
+module.exports.getMatchingUsers = function getMatchingUsers(val) {
+    return db.query(
+        `SELECT first FROM users
+         WHERE first
+         ILIKE $1
+         LIMIT 4;`, [val + '%']);
+}//getMatchingUsers close.
+
+module.exports.selectUsers = function selectUsers() {
+    return db.query(
+        `SELECT * FROM users
+         ORDER BY id DESC
+         LIMIT 3`);
+}//selectUsers close.

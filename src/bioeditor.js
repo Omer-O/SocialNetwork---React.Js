@@ -39,6 +39,7 @@ export class BioEditor extends React.Component {
         });
     }//saveBio close.
     render() {
+        console.log('this.props before return: ', this.props);
             return (
 
                 <div className="bio-wraper">
@@ -47,25 +48,29 @@ export class BioEditor extends React.Component {
                         <div className="edit-click"
                          onClick={e => this.handleClick(e)}
                         >edit</div>
-                        <h2>PERSONAL INFORMATION</h2>
+                        <h4>PERSONAL INFORMATION</h4>
                         <p className ="bio-field"
                         >{this.props.bio}</p>
                         <div className="close-click"
                          onClick={e => this.handleSecondClick(e)}
                         >close</div>
                     </div>
-                {this.state.editBio &&
-                    <textarea className='text-field'
-                     type="text"
-                     name="bio"
-                     defaultValue={this.state.bio}
-                     onChange={e => this.handleChange(e)}
-                    ></textarea>}
-                    <button className="save-btn"
-                     name="button"
-                     onClick={e => this.saveBio(e)}
-                     onClick={e => this.handleSecondClick(e)}
-                     >SAVE</button>
+                    <div className="textarea-container">
+                    {this.state.editBio &&
+                        <textarea
+                         className="text-field"
+                         type="text"
+                         name="bio"
+                         defaultValue={this.state.bio}
+                         onChange={e => this.handleChange(e)}
+                        ></textarea>}
+                        <button
+                         className="save-btn"
+                         name="button"
+                         onClick={e => this.saveBio(e)}
+                         onClick={e => this.handleSecondClick(e)}
+                         >SAVE</button>
+                    </div>
                 </div>
             )//render-return close.
     }//render close.

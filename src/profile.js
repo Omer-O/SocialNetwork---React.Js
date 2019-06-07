@@ -14,16 +14,19 @@ export class Profile extends React.Component {
     render() {
         return (
             <div className="wraper-profile">
-                <Profilepic
-                    className="user-img"
-                    imageUrl={this.props.imageUrl}
-                    first={this.props.first}
-                    last={this.props.last}
-                    showUpload={this.props.showUpload}
-                />
-                 <BioEditor
-                    bio={this.props.bio}
-                    bioEdit={this.props.bioEdit} />
+                <div className="container-profile">
+                    <Profilepic
+                        className="user-img"
+                        imageUrl={this.props.imageUrl}
+                        first={this.props.first}
+                        last={this.props.last}
+                        showUpload={this.props.showUpload}
+                    />
+                 </div>
+                     <BioEditor
+                        bio={this.props.bio}
+                        bioEdit={this.props.bioEdit}
+                    />
             </div>
         )
     }

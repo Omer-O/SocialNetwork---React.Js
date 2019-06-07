@@ -36,6 +36,10 @@ h3 {
     margin: 0 auto;
 }
 
+.profile-container {
+    display: flex;
+}
+
 .upload-btn {
   border: 2px solid gray;
   color: gray;
@@ -44,6 +48,17 @@ h3 {
   border-radius: 8px;
   font-size: 20px;
   font-weight: bold;
+}
+
+.profile-pic-container {
+    display: flex;
+    justify-content: center;
+    justify-content: space-around;
+    flex-flow: wrap;
+    font-size: 35px;
+    vertical-align: top;
+    display: inline-block;
+    align-items: center;
 }
 
 .wraper-header {
@@ -63,10 +78,13 @@ h3 {
 .logo-welcome {
     margin: 0 auto;
 }
-/* .wraper-app {
-    margin-top: 100px;
-    margin-left: 50px;
-} */
+
+p.bio-field {
+    display: flex;
+    width: 700px;
+    height: 400px;
+    border: 2px solid;
+}
 
 .wraper-profile {
     display: flex;
