@@ -62,3 +62,25 @@ module.exports.searchUsers = function searchUsers(text) {
         OR last ILIKE $1
         LIMIT 20;`,[text + '%']);
 };//searchUsers close.
+module.exports.friendRequest = function friendRequest(recieverId, senderId) {
+    return db.query(`
+        INSERT INTO friendrequest(reciever_id, sender_id)
+        VALUES ($1,$2)
+        RETURNING *`, [recieverId, senderId]
+    );
+}//friendRequest close.
+module.exports.acceptFriendRequest = function acceptFriendRequest(recieverId, senderId) {
+    return db.query(`
+        UPDATE friendrequest
+        SET accepted=TRUE
+        WHERE reciever_id=$1
+        AND sender_id=$2
+        RETURNING *`, [recieverId, senderId]
+    );
+}//acceptFriendRequest close.
+module.exports.deleteRequest = function deleteSignature(recieverId, senderId) {
+    return db.query(`
+        DELETE FROM friendrequest
+        WHERE reciever_id=$1
+        AND sender_id=$2`, [recieverId, senderId]);
+};

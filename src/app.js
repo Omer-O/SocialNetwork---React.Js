@@ -30,7 +30,7 @@ export class App extends React.Component {
     showUpload() {
         this.setState({
             uploaderVisible: true
-        })
+        });
     }//showUpload close.
     bioEdit(bio) {
         this.setState({
@@ -48,7 +48,7 @@ export class App extends React.Component {
             return (
             <img src="/img/profilepic.jpg"
                 className="user-img" />
-            )
+            );
         }
         console.log('this.state of app:', this.state);
     return (

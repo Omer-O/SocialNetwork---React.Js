@@ -57,13 +57,10 @@ if (process.env.NODE_ENV != 'production') {
 } else {
     app.use('/bundle.js', (req, res) => res.sendFile(`${__dirname}/bundle.js`));
 }
-//////////// registration post request:
+//////////// POST registration post request //////////
 app.post('/registration', (req, res) => {
-    //console.log('this is welcome req.body', req.body);
-    //console.log('req.body.password :', req.body.password);
         bc.hashPassword(req.body.password
         ).then(hashPass => {
-            //console.log('this is hashpass:', hashPass);
             db.addUser(
             req.body.first,
             req.body.last,
@@ -88,7 +85,7 @@ app.post('/registration', (req, res) => {
         });
     });
 });
-///////////////// login post request ////////////
+///////////////// POST login post request ////////////
 app.post('/login', (req,res) => {
         db.getUserDataByMail(req.body.email
         ).then(newPass => {
@@ -114,14 +111,13 @@ app.post('/login', (req,res) => {
         });
     });
 });
-//////////////////// upload picture ////////////////////////////
+//////////////////// POST upload picture ////////////////
 app.post('/user-image', uploader.single('file'),
         s3.upload, function(req, res) {
             //console.log('user-image req.body', req.body);
             let imageUrl = "https://s3.amazonaws.com/spicedling/" + req.file.filename;
             db.updateUserImg(req.session.userId, imageUrl)
                 .then(result => {
-                    //console.log('result of updateUserImg:', result);
                     res.json({
                         id: result.rows[0].id,
                         imageUrl: result.rows[0].url,
@@ -135,12 +131,11 @@ app.post('/user-image', uploader.single('file'),
                     });
                 });
 });//uploader.single function close
-///////////////// bio update page /////////////////////////////
+///////////////// POST bio update page //////////////////
 app.post('/bio', (req, res) => {
     let user = req.session.userId;
     let bio = req.body.bio;
     db.updateUserBio(user, bio).then(result => {
-        //console.log('result of updateUserBio:', result);
         res.json({
             id: result.rows[0].id,
             imageUrl: result.rows[0].url,
@@ -155,16 +150,14 @@ app.post('/bio', (req, res) => {
         });
     });
 });//app.post('/bio') close.
-////// get user ////////////////
+//////////////////// GET user ////////////////
 app.get('/user', (req, res) => {
-    //console.log('req.session.userId :', req.session.userId);
     if (!req.session.userId) {
         res.redirect('/login');
     } else {
         db.getUserDataById(req.session.userId)
         .then(result => {
             const userData = result.rows[0];
-                //console.log('image:', userData);
                 res.json({
                     id: userData.id,
                     first: userData.first,
@@ -175,9 +168,6 @@ app.get('/user', (req, res) => {
                 });
         }).catch(err => {
             console.log('getUserDataById ERROR:', err);
-            // res.json({
-            //     error: "Upload failed"
-            // });
         });
     }
 });

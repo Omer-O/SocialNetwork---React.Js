@@ -35,11 +35,14 @@ export class OtherProfile extends React.Component {
                             first={this.state.first}
                             last={this.state.last}
                         />
+                        <button className="request-friend"
+                         // onClick={(e => this.uploadFile(e))}
+                         >Friend Request</button>
+                    </div>
+                    <div className="bio-container">
                         <p className="search-name">
                          {this.state.first} {this.state.last}
                         </p>
-                    </div>
-                    <div className="bio-container">
                         <p className ="bio-field">{this.state.bio}</p>
                     </div>
                  </div>

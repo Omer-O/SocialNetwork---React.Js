@@ -6,5 +6,3 @@ export function useStatefulInputs() {
     const [values, setValues] = setState({});
     const onChange = e => setValues ()
 }
-
-//

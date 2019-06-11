@@ -4,7 +4,3 @@ CREATE TABLE friendRequest(
     reciever_id INTEGER REFERENCES users(id) NOT NULL,
     accepted BOOLEAN DEFAULT FALSE NOT NULL
 );
-
--- //4 querys 
--- select
--- cxl /  unfriend delete
