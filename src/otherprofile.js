@@ -30,12 +30,14 @@ export class OtherProfile extends React.Component {
                 <div className="profile-container">
                     <div className="profile-pic-container">
                         <Profilepic
-                            className="user-img"
+                            className="web-img"
                             imageUrl={this.state.url}
                             first={this.state.first}
                             last={this.state.last}
                         />
-                        {this.state.first} {this.state.last}
+                        <p className="search-name">
+                         {this.state.first} {this.state.last}
+                        </p>
                     </div>
                     <div className="bio-container">
                         <p className ="bio-field">{this.state.bio}</p>

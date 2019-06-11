@@ -41,19 +41,18 @@ export class BioEditor extends React.Component {
     render() {
         console.log('this.props before return: ', this.props);
             return (
-
                 <div className="bio-wraper">
                  {this.state.error}
                     <div className="bio-container">
                         <div className="edit-click"
                          onClick={e => this.handleClick(e)}
-                        >edit</div>
+                         >edit</div>
                         <h4>PERSONAL INFORMATION</h4>
                         <p className ="bio-field"
-                        >{this.props.bio}</p>
+                         >{this.props.bio}</p>
                         <div className="close-click"
                          onClick={e => this.handleSecondClick(e)}
-                        >close</div>
+                         >close</div>
                     </div>
                     <div className="textarea-container">
                     {this.state.editBio &&

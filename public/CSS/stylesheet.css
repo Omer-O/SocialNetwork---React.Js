@@ -79,15 +79,13 @@ h3 {
     margin: 0 auto;
 }
 
-p.bio-field {
-    display: flex;
-    width: 700px;
-    height: 400px;
-    border: 2px solid;
-}
-
 .wraper-profile {
     display: flex;
+}
+
+.search-results {
+    display: flex;
+    flex-direction: column;
 }
 
 img {
@@ -101,6 +99,15 @@ img.user-img {
     height: 200px;
     width: 200px;
 }
+img.web-img {
+    display: inline-flex;
+    height: 350px;
+    width: 350px;
+}
+img:hover {
+    color: lightgrey;
+    box-shadow: 0 11px 12px rgba(2, 9, 8, 1), 0 15px 6px rgba(0, 0, 0, 0.12);
+}
 
 p {
     font-family: 'Roboto Mono', monospace;
@@ -110,6 +117,31 @@ p {
     width: 55%;
     font-size: 27px;
     color: #000000de;
+}
+
+p.search-name{
+    letter-spacing: 0.2em;
+    width: 58%;
+    font-size: 45px;
+    text-decoration: overline;
+    display: inline-flex;
+    margin-left: 60px;
+}
+p:visited{
+    text-decoration-color: black;
+}
+
+p.bio-field {
+    display: flex;
+    width: 45%;
+    border-top: 2px solid;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
 form {

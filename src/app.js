@@ -57,6 +57,7 @@ export class App extends React.Component {
                 <header className="wraper-header">
                     <img src="/img/logo.png"
                         className="logo-image"/>
+                    <h1><Link to={"/findusers"} >SEARCH</Link></h1>
                     <Profilepic
                         className="user-img"
                         imageUrl={this.state.imageUrl}
@@ -80,11 +81,19 @@ export class App extends React.Component {
                                         bioEdit={this.bioEdit}
                                     />
                                 )} />
-                            <Route path="/user/:id" component={OtherProfile} />
+                            <Route
+                               path="/user/:id"
+                               render={props => (
+                                   <OtherProfile
+                                       key={props.match.url}
+                                       match={props.match}
+                                       history={props.history}
+                                   />
+                               )}
+                           />
 
-                            <Route exact path="/findusers" render={() => (
-                                <FindPeople />
-                                )} />
+                           <Route exact path="/findusers" render={() => (
+                                <FindPeople /> )} />
                          </div>
                    </div>
            </BrowserRouter>

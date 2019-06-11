@@ -51,6 +51,14 @@ module.exports.getMatchingUsers = function getMatchingUsers(val) {
 module.exports.selectUsers = function selectUsers() {
     return db.query(
         `SELECT * FROM users
-         ORDER BY id DESC
-         LIMIT 3`);
+         ORDER BY created_at DESC
+         LIMIT 3; `);
 }//selectUsers close.
+module.exports.searchUsers = function searchUsers(text) {
+    return db.query(`
+        SELECT id, first, last, url
+        FROM users
+        WHERE first ILIKE $1
+        OR last ILIKE $1
+        LIMIT 20;`,[text + '%']);
+};//searchUsers close.

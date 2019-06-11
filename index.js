@@ -57,7 +57,6 @@ if (process.env.NODE_ENV != 'production') {
 } else {
     app.use('/bundle.js', (req, res) => res.sendFile(`${__dirname}/bundle.js`));
 }
-
 //////////// registration post request:
 app.post('/registration', (req, res) => {
     //console.log('this is welcome req.body', req.body);
@@ -138,8 +137,6 @@ app.post('/user-image', uploader.single('file'),
 });//uploader.single function close
 ///////////////// bio update page /////////////////////////////
 app.post('/bio', (req, res) => {
-//console.log('this is BIO POST req.session', req.session.userId);
-//console.log('this is BIO POST req.body', req.body);
     let user = req.session.userId;
     let bio = req.body.bio;
     db.updateUserBio(user, bio).then(result => {
@@ -200,12 +197,14 @@ app.get("/otheruser/:id", (req, res) => {
         });
 });//getUserDataById close.
 /////////////////////// GET /users /////////
-app.get("/users", (req, res) => {
-    console.log("/users", req.body);
-    db.selectUsers()
+app.post("/users", (req, res) => {
+    console.log("/users", req.body.search);
+    db.searchUsers(req.body.search)
         .then(result => {
             console.log('this is result selectUsers', result);
-            res.json(result.rows[0]);
+            res.json({
+                users: result.rows
+            });
         })
         .catch(err => {
             console.log('selectUsers ERROR:', err);
