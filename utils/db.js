@@ -62,25 +62,33 @@ module.exports.searchUsers = function searchUsers(text) {
         OR last ILIKE $1
         LIMIT 20;`,[text + '%']);
 };//searchUsers close.
-module.exports.friendRequest = function friendRequest(recieverId, senderId) {
+module.exports.friendStatus = function friendStatus(senderId, recieverId) {
     return db.query(`
-        INSERT INTO friendrequest(reciever_id, sender_id)
-        VALUES ($1,$2)
-        RETURNING *`, [recieverId, senderId]
+        SELECT * FROM friendrequest
+        WHERE (sender_id=$1 AND reciever_id=$2)
+        OR (sender_id=$2 AND reciever_id=$1)`, [senderId, recieverId]
+    );
+}//friendStatus close.
+module.exports.friendRequest = function friendRequest(senderId, recieverId) {
+    return db.query(`
+        INSERT INTO friendrequest
+        (sender_id, reciever_id)
+        VALUES ($1, $2)
+        RETURNING *`, [senderId, recieverId]
     );
 }//friendRequest close.
-module.exports.acceptFriendRequest = function acceptFriendRequest(recieverId, senderId) {
+module.exports.acceptFriendRequest = function acceptFriendRequest(senderId, recieverId) {
     return db.query(`
         UPDATE friendrequest
-        SET accepted=TRUE
-        WHERE reciever_id=$1
-        AND sender_id=$2
-        RETURNING *`, [recieverId, senderId]
+        SET accepted=true
+        WHERE sender_id=$1
+        AND reciever_id=$2
+        RETURNING *`, [senderId, recieverId]
     );
 }//acceptFriendRequest close.
-module.exports.deleteRequest = function deleteSignature(recieverId, senderId) {
+module.exports.deleteRequest = function deleteSignature(senderId, recieverId) {
     return db.query(`
         DELETE FROM friendrequest
-        WHERE reciever_id=$1
-        AND sender_id=$2`, [recieverId, senderId]);
+        WHERE (sender_id=$1 AND reciever_id=$2)
+        OR (sender_id=$2 AND reciever_id=$1)`, [senderId, recieverId]);
 };

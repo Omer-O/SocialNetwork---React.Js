@@ -58,6 +58,25 @@ if (process.env.NODE_ENV != 'production') {
     app.use('/bundle.js', (req, res) => res.sendFile(`${__dirname}/bundle.js`));
 }
 //////////// POST registration post request //////////
+// app.post('/registration', async (req, res) => {
+//     console.log("this is registration POST:", req.body);
+//     const { first, last, email, password } = req.body;
+//     try {
+//         const hash = await bc.hashPassword(password);
+//         const userData = await db.addUser(first, last, email, hash);
+//
+//         req.session.userId = userData.rows[0].id;
+//         res.json({
+//             userId: userData.rows[0].id,
+//             success: true
+//         });
+//     } catch (e) {
+//         console.log('ERROR');
+//         res.json({
+//             error: "oops, WRONG INFO"
+//         });
+//     }
+// });
 app.post('/registration', (req, res) => {
         bc.hashPassword(req.body.password
         ).then(hashPass => {
@@ -111,7 +130,7 @@ app.post('/login', (req,res) => {
         });
     });
 });
-//////////////////// POST upload picture ////////////////
+//////////////////// POST upload picture ///////////////
 app.post('/user-image', uploader.single('file'),
         s3.upload, function(req, res) {
             //console.log('user-image req.body', req.body);
@@ -131,7 +150,7 @@ app.post('/user-image', uploader.single('file'),
                     });
                 });
 });//uploader.single function close
-///////////////// POST bio update page //////////////////
+///////////////// POST bio update page /////////////////
 app.post('/bio', (req, res) => {
     let user = req.session.userId;
     let bio = req.body.bio;
@@ -171,24 +190,93 @@ app.get('/user', (req, res) => {
         });
     }
 });
-/////////////////////// GET /user/:id /////////
-app.get("/otheruser/:id", (req, res) => {
-    console.log("/otheruser/:id:", req.params.id);
-    db.getUserDataById(req.params.id)
-        .then(result => {
-            console.log('this is result of /otheruser/:id:', result );
-            res.json(result.rows[0]);
-        })
-        .catch(err => {
-            console.log('getUserDataById ERROR:', err);
-            res.json({
-                error: "USER WAS NOT FOUND"
-            });
+
+////////////////// GET "/otheruser/:id" ////////////////
+app.get("/otheruser/:id", async (req, res) => {
+    if ( req.params.id == req.session.id ) {
+        res.json({
+            success: false
         });
+    } else {
+        try {
+            const getUserDataById = await db.getUserDataById(req.params.id);
+            console.log("getUserDataById:", getUserDataById);
+            res.json(getUserDataById.rows[0]);
+        } catch(err) {
+                console.log('getUserDataById ERROR:', err);
+                res.json({
+                    error: "USER WAS NOT FOUND"
+                });
+         }
+    }
 });//getUserDataById close.
+////////////////// GET "/friends/:user_id" ////////////////
+app.get("/friends/:user_id", (req, res) => {
+    let reciever = req.params.user_id;
+    console.log("reciever:", reciever);
+    let sender = req.session.userId;
+    console.log("sender:", sender);
+    if (  reciever != sender  ) {
+        db.friendStatus(sender, reciever)
+        .then(result => {
+            console.log("result of GET friends:", result.rows[0]);
+            if ( result.rowCount == 0 ) {
+                res.json({
+                    status: "Start Friendship"
+                });
+            } else if (result.rows[0].reciver_id == reciever) {
+                res.json({
+                    status: "Cancel Friendship"
+                });
+            } else if ( result.rows[0].sender_id == reciever ) {
+                res.json({
+                    status: "Accept Friendship"
+                });
+            }
+        }).catch(err => {
+                console.log('friendStatus ERROR:', err);
+        });
+    }
+});//friends/:user_id" close.
+////////////////// POST "/friends" ////////////////
+app.post("/friends", (req, res) => {
+    console.log("this is req.body POST button:", req.body.status);
+    let reciever = req.body.user_id;
+    let sender = req.session.userId;
+    let buttonStatus = req.body.status;
+    console.log("buttonStatus POST:", buttonStatus);
+    if ( buttonStatus == "Start Friendship" ) {
+        db.friendRequest(sender, reciever)
+         .then(result => {
+             res.json({
+                 status: "Cancel Request"
+             });
+         }).catch(err => {
+                 console.log('friendRequest ERROR:', err);
+         });
+    } else if ( buttonStatus == "Accept Friendship") {
+        db.acceptFriendRequest(sender, reciever)
+         .then(result => {
+             res.json({
+                 status: "Cancel Friendship"
+             });
+         }).catch(err => {
+                 console.log('acceptFriendRequest ERROR:', err);
+         });
+    } else if ( buttonStatus == "Cancel Friendship" ) {
+        db.deleteRequest(sender, reciever)
+         .then(result => {
+             res.json({
+                 status: "Start Friendship"
+             });
+         }).catch(err => {
+                 console.log('deleteRequest ERROR:', err);
+         });
+    }
+});//"/friends" close.
 /////////////////////// GET /users /////////
 app.post("/users", (req, res) => {
-    console.log("/users", req.body.search);
+    //console.log("/users", req.body.search);
     db.searchUsers(req.body.search)
         .then(result => {
             console.log('this is result selectUsers', result);

@@ -8,10 +8,6 @@ import { Profile } from './profile';
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import { OtherProfile } from './otherprofile';
 import { FindPeople } from './findpeople';
-//in the render of app we will pass the browser router inside we will pass the profile and than we render a componenet name OtherProfile.
-
-//All the routes must be inside BrowserRouter
-
 
 export class App extends React.Component {
     constructor(props) {
@@ -91,7 +87,6 @@ export class App extends React.Component {
                                    />
                                )}
                            />
-
                            <Route exact path="/findusers" render={() => (
                                 <FindPeople /> )} />
                          </div>

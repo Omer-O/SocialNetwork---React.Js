@@ -103,5 +103,23 @@ app.post('/registration', async (req, res) => {
         });
     } catch (e) {
         console.log('ERROR');
+        res.json({
+            error: "oops, WRONG INFO"
+        });
     }
 });
+/////////////////////// GET /user/:id /////////
+// app.get("/otheruser/:id", (req, res) => {
+//     console.log("/otheruser/:id:", req.params.id);
+//     db.getUserDataById(req.params.id)
+//         .then(result => {
+//             console.log('this is result of /otheruser/:id:', result );
+//             res.json(result.rows[0]);
+//         })
+//         .catch(err => {
+//             console.log('getUserDataById ERROR:', err);
+//             res.json({
+//                 error: "USER WAS NOT FOUND"
+//             });
+//         });
+// });//getUserDataById close.
