@@ -154,12 +154,12 @@ app.post("/user-image", uploader.single("file"), s3.upload, function(req, res) {
 }); //uploader.single function close
 ///////////////// POST bio update page /////////////////
 app.post("/bio", (req, res) => {
-    console.log('this is POST bio:', req.body);
+    console.log("this is POST bio:", req.body);
     let user = req.session.userId;
     let bio = req.body.bio;
     db.updateUserBio(user, bio)
         .then(result => {
-            console.log('this is bio result:', result);
+            console.log("this is bio result:", result);
             res.json({
                 id: result.rows[0].id,
                 imageUrl: result.rows[0].url,
@@ -243,7 +243,7 @@ app.get("/friends/:user_id", async (req, res) => {
                     }
                 }
             }
-            console.log('status', status);
+            console.log("status", status);
             res.json(status);
         } catch (err) {
             console.log("friendStatus ERROR:", err);
@@ -257,52 +257,64 @@ app.post("/friends", async (req, res) => {
     const otherUser = req.body.user_id;
     const mainUser = req.session.userId;
     const buttonStatus = req.body.status;
-    console.log("buttonStatus/mainUser/otherUser of POST:", buttonStatus, mainUser, otherUser);
+    console.log(
+        "buttonStatus/mainUser/otherUser of POST:",
+        buttonStatus,
+        mainUser,
+        otherUser
+    );
     try {
         if (buttonStatus == "Add Friend") {
             const friendRequest = await db.friendRequest(mainUser, otherUser);
-                status = { status: "Cancel Request" };
+            status = { status: "Cancel Request" };
         } else if (buttonStatus == "Accept Friendship") {
-            const acceptFriendRequest = await db.acceptFriendRequest(otherUser, mainUser);
-                status = { status: "Unfriend" };
+            const acceptFriendRequest = await db.acceptFriendRequest(
+                otherUser,
+                mainUser
+            );
+            status = { status: "Unfriend" };
         } else if (buttonStatus == "Unfriend") {
             const deleteRequest = await db.deleteRequest(mainUser, otherUser);
             status = { status: "Add Friend" };
-        } else if  (buttonStatus == "Cancel Request") {
+        } else if (buttonStatus == "Cancel Request") {
             const deleteRequest = await db.deleteRequest(mainUser, otherUser);
             status = { status: "Add Friend" };
         } else {
             status = { status: "@" };
         }
-        console.log('status', status);
+        console.log("status", status);
         res.json(status);
-    } catch(err) {
+    } catch (err) {
         console.log("deleteRequest ERROR:", err);
     }
 }); //"/friends" close.
 ///////////////////////GET wanabies /////////////////
-app.get("/friends-wannabes", async (res, req) => {
+app.get("/get-friendship", async (req, res) => {
     const user = req.session.userId;
     try {
         const wannabes = await db.wannabes(user);
+        console.log("this is wanabbies of GET:", wannabes);
         res.json(wannabes);
     } catch (err) {
         console.log("friends-wannabes ERROR", err);
     }
 });
 ///////////////////////POST wanabies accept-friendship/////////////////
-app.post("/accept-friendship", async (res, req) => {
+app.post("/accept-friendship", async (req, res) => {
     const user = req.session.userId;
     const wannabe = req.body.user_id;
     try {
-        const acceptFriendRequest = await db.acceptFriendRequest(otherUser, mainUser);
+        const acceptFriendRequest = await db.acceptFriendRequest(
+            otherUser,
+            mainUser
+        );
         res.json(acceptFriendRequest);
     } catch (err) {
         console.log("accept-friendship ERROR", err);
     }
 });
 ///////////////////////POST wanabies end-friendship  /////////////////
-app.post("/end-friendship", async (res, req) => {
+app.post("/end-friendship", async (req, res) => {
     const user = req.session.userId;
     const wannabe = req.body.user_id;
     try {

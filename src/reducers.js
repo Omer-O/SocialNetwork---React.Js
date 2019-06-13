@@ -19,10 +19,9 @@ export default function reducer(state = {}, action) {
             ...state,
             endUserId: action.unfriend.filter(endUserId)
         };
-    } else {
-        console.log("this is action reducer:", action);
-        return state;
     }
+    console.log("this is action reducer:", action);
+    return state;
 }
 //tips:
 //we can use:

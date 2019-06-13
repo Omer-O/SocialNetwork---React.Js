@@ -58,7 +58,6 @@ export class App extends React.Component {
                             showUpload={this.showUpload}
                         />
                     </header>
-                    <Friends />
                     {this.state.uploaderVisible && (
                         <Uploader uploaded={this.uploaded} />
                     )}
@@ -93,6 +92,7 @@ export class App extends React.Component {
                             path="/findusers"
                             render={() => <FindPeople />}
                         />
+                        <Route path="/friends" component={Friends} />
                     </div>
                 </div>
             </BrowserRouter>
