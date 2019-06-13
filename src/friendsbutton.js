@@ -26,7 +26,7 @@ export function FriendsButton(props) {
         }).catch (error => {
             console.log('useEffect of friendship ERROR:', error);
         });
-    }, [friendRequest]);//useEffect close.
+    }, []);//useEffect close.
     return (
             <button className="friend-btn"
              onClick={updateRelationship}

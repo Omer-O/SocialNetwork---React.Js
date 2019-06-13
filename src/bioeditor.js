@@ -27,6 +27,7 @@ export class BioEditor extends React.Component {
 
     saveBio(e) {
         e.preventDefault();
+        console.log('saveBio clicked');
         axios.post('/bio', {
             bio: this.state.bio,
         }).then(result => {

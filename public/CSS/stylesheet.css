@@ -107,6 +107,7 @@ img.web-img {
 img:hover {
     color: lightgrey;
     box-shadow: 0 11px 12px rgba(2, 9, 8, 1), 0 15px 6px rgba(0, 0, 0, 0.12);
+    transition: (all .2s);
 }
 
 p {

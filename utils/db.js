@@ -92,3 +92,12 @@ module.exports.deleteRequest = function deleteSignature(senderId, recieverId) {
         WHERE (sender_id=$1 AND reciever_id=$2)
         OR (sender_id=$2 AND reciever_id=$1)`, [senderId, recieverId]);
 };
+module.exports.wannabes = function wannabes(userId) {
+    return db.query(`
+    SELECT users.id, first, last, image, accepted
+    FROM friendrequest
+    JOIN users
+    ON (accepted = false AND reciever_id = $1 AND sender_id = users.id)
+    OR (accepted = true AND reciever_id = $1 AND sender_id = users.id)
+    OR (accepted = true AND sender_id = $1 AND reciever_id = users.id)`);
+}
