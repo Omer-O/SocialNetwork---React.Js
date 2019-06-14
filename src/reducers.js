@@ -5,19 +5,23 @@ export default function reducer(state = {}, action) {
     if (action.type === "REQUEST_WANNABES") {
         return {
             ...state,
-            friendsWannabes: action.receiveFriendsWannabes
+            myFriends: action.friendsWannabes
         };
     }
     if (action.type === "ADD_WANNABES") {
         return {
             ...state,
-            acceptedUserId: action.acceptFriendRequest
+            myFriends: state.myFriends.filter(
+                friend => friend.id != action.acceptedUserId
+            )
         };
     }
     if (action.type === "DELETE_WANNABES") {
         return {
             ...state,
-            endUserId: action.unfriend.filter(endUserId)
+            myFriends: state.myFriends.filter(
+                friend => friend.id != action.endUserId
+            )
         };
     }
     console.log("this is action reducer:", action);

@@ -301,13 +301,12 @@ app.get("/get-friendship", async (req, res) => {
 });
 ///////////////////////POST wanabies accept-friendship/////////////////
 app.post("/accept-friendship", async (req, res) => {
+    console.log("this is req.body accept-friendship:", req.body);
     const user = req.session.userId;
     const wannabe = req.body.user_id;
     try {
-        const acceptFriendRequest = await db.acceptFriendRequest(
-            otherUser,
-            mainUser
-        );
+        const acceptFriendRequest = await db.acceptFriendRequest(wannabe, user);
+        console.log("this is acceptFriendRequest:", acceptFriendRequest);
         res.json(acceptFriendRequest);
     } catch (err) {
         console.log("accept-friendship ERROR", err);
@@ -315,10 +314,12 @@ app.post("/accept-friendship", async (req, res) => {
 });
 ///////////////////////POST wanabies end-friendship  /////////////////
 app.post("/end-friendship", async (req, res) => {
+    console.log("this is req.body end-friendship:", req.body);
     const user = req.session.userId;
     const wannabe = req.body.user_id;
     try {
-        const deleteRequest = await db.deleteRequest(mainUser, otherUser);
+        const deleteRequest = await db.deleteRequest(user, wannabe);
+        console.log("this is deleteRequest:", deleteRequest);
         res.json(deleteRequest);
     } catch (err) {
         console.log("end-friendship ERROR", err);
@@ -344,7 +345,7 @@ app.post("/users", (req, res) => {
 //////////////// GET log out //////////////
 app.get("/logout", (req, res) => {
     req.session = null;
-    res.redirect("/welcome");
+    res.redirect("/welcome#");
 }); //logout close.
 //////////////// GET * //////////////
 app.get("/get-list-animals", (req, res) => {

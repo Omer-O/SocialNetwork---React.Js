@@ -50,6 +50,9 @@ export class App extends React.Component {
                         <h2>
                             <Link to={"/findusers"}>find friend</Link>
                         </h2>
+                        <h2>
+                            <Link to="/logout">logout</Link>
+                        </h2>
                         <Profilepic
                             className="user-img"
                             imageUrl={this.state.imageUrl}
@@ -58,6 +61,7 @@ export class App extends React.Component {
                             showUpload={this.showUpload}
                         />
                     </header>
+
                     {this.state.uploaderVisible && (
                         <Uploader uploaded={this.uploaded} />
                     )}
@@ -66,15 +70,20 @@ export class App extends React.Component {
                             exact
                             path="/"
                             render={() => (
-                                <Profile
-                                    id={this.state.id}
-                                    first={this.state.first}
-                                    last={this.state.last}
-                                    imageUrl={this.state.imageUrl}
-                                    onClick={this.showUpload}
-                                    bio={this.state.bio}
-                                    bioEdit={this.bioEdit}
-                                />
+                                <div className="container-profile">
+                                    <Profile
+                                        id={this.state.id}
+                                        first={this.state.first}
+                                        last={this.state.last}
+                                        imageUrl={this.state.imageUrl}
+                                        onClick={this.showUpload}
+                                        bio={this.state.bio}
+                                        bioEdit={this.bioEdit}
+                                    />
+                                    <p>
+                                        {this.state.first} {this.state.last}
+                                    </p>
+                                </div>
                             )}
                         />
                         <Route

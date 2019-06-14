@@ -1,47 +1,26 @@
 import axios from "./axios";
 
 //all ajax requests will go in this fileSize
-export function getFriendship() {
-    return axios
-        .get("/get-friendship")
-        .then(({ data }) => {
-            console.log("this is data of getFriendship:", data);
-            return {
-                type: "REQUEST_WANNABES",
-                friendsWannabes: data
-            };
-        })
-        .catch(error => {
-            console.log("receiveFriendsWannabes ERROR:", error);
-        });
+export async function getFriendship() {
+    const data = await axios.get("/get-friendship");
+    return {
+        type: "REQUEST_WANNABES",
+        friendsWannabes: data.data.rows
+    };
 }
 
-// export function acceptFriendship() {
-//     return axios
-//         .post("/accept-friendship")
-//         .then(({ data }) => {
-//             console.log("this is data of acceptFriendship:", data);
-//             return {
-//                 type: "ADD_WANNABES",
-//                 acceptedUserId: data
-//             };
-//         })
-//         .catch(error => {
-//             console.log("acceptFriendRequest ERROR:", error);
-//         });
-// }
-//
-// export function unfriend() {
-//     return axios
-//         .post("/end-friendship")
-//         .then(({ data }) => {
-//             console.log("this is data of unfriend:", data);
-//             return {
-//                 type: "DELETE_WANNABES",
-//                 endUserId: data
-//             };
-//         })
-//         .catch(error => {
-//             console.log("unfriend ERROR:", error);
-//         });
-// }
+export async function acceptFriendship(id) {
+    await axios.post("/accept-friendship", { user_id: id });
+    return {
+        type: "ADD_WANNABES",
+        acceptedUserId: id
+    };
+}
+
+export async function unfriend(id) {
+    await axios.post("/end-friendship", { user_id: id });
+    return {
+        type: "DELETE_WANNABES",
+        endUserId: id
+    };
+}

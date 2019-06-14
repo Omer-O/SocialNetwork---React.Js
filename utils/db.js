@@ -113,7 +113,7 @@ module.exports.acceptFriendRequest = function acceptFriendRequest(
         [senderId, recieverId]
     );
 }; //acceptFriendRequest close.
-module.exports.deleteRequest = function deleteSignature(senderId, recieverId) {
+module.exports.deleteRequest = function deleteRequest(senderId, recieverId) {
     return db.query(
         `
         DELETE FROM friendrequest
