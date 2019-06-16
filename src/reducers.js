@@ -11,9 +11,14 @@ export default function reducer(state = {}, action) {
     if (action.type === "ADD_WANNABES") {
         return {
             ...state,
-            myFriends: state.myFriends.filter(
-                friend => friend.id != action.acceptedUserId
-            )
+            myFriends: state.myFriends.map(friend => {
+                if (friend.id == action.acceptedUserId) {
+                    return;
+                    friend.accepted == true;
+                } else {
+                    return friend;
+                }
+            })
         };
     }
     if (action.type === "DELETE_WANNABES") {

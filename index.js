@@ -347,12 +347,6 @@ app.get("/logout", (req, res) => {
     req.session = null;
     res.redirect("/welcome#");
 }); //logout close.
-//////////////// GET * //////////////
-app.get("/get-list-animals", (req, res) => {
-    //here will come db if we got.
-    let animals = ["dogs", "cats", "otters", "birds"];
-    res.json(animals);
-});
 //////////////////////////////////////////////////////////////
 app.get("*", function(req, res) {
     res.sendFile(__dirname + "/index.html");

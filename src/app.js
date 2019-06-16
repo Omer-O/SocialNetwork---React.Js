@@ -51,6 +51,12 @@ export class App extends React.Component {
                             <Link to={"/findusers"}>find friend</Link>
                         </h2>
                         <h2>
+                            <Link to="/friends">Friends</Link>
+                        </h2>
+                        <h2>
+                            <Link to="/">edit profile</Link>
+                        </h2>
+                        <h2>
                             <Link to="/logout">logout</Link>
                         </h2>
                         <Profilepic
@@ -61,7 +67,6 @@ export class App extends React.Component {
                             showUpload={this.showUpload}
                         />
                     </header>
-
                     {this.state.uploaderVisible && (
                         <Uploader uploaded={this.uploaded} />
                     )}
