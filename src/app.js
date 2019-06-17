@@ -57,7 +57,7 @@ export class App extends React.Component {
                             <Link to="/">edit profile</Link>
                         </h2>
                         <h2>
-                            <Link to="/logout">logout</Link>
+                            <a href="/logout">logout</a>
                         </h2>
                         <Profilepic
                             className="user-img"
