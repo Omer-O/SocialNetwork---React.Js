@@ -21,10 +21,13 @@ export class App extends React.Component {
     } //constructor close.
     uploaded(imageUrl) {
         this.setState({
-            imageUrl: imageUrl,
-            uploaderVisible: false
+            imageUrl: imageUrl
+            // uploaderVisible: false
         });
     } //uploaded close.
+    handleClick(e) {
+        this.setState({ uploaderVisible: false });
+    }
     showUpload() {
         this.setState({
             uploaderVisible: true
@@ -33,7 +36,6 @@ export class App extends React.Component {
     bioEdit(bio) {
         this.setState({
             bio: bio
-            //bioEditVisible: false
         });
     } //bioEdit close.
     componentDidMount() {
@@ -64,6 +66,19 @@ export class App extends React.Component {
                         <h2>
                             <a href="/logout">logout</a>
                         </h2>
+                        <div className="uploader">
+                            {this.state.uploaderVisible && (
+                                <div>
+                                    <div
+                                        className="close-click"
+                                        onClick={e => this.handleClick(e)}
+                                    >
+                                        close X
+                                    </div>
+                                    <Uploader uploaded={this.uploaded} />
+                                </div>
+                            )}
+                        </div>
                         <Profilepic
                             className="user-img"
                             imageUrl={this.state.imageUrl}
@@ -72,9 +87,6 @@ export class App extends React.Component {
                             showUpload={this.showUpload}
                         />
                     </header>
-                    {this.state.uploaderVisible && (
-                        <Uploader uploaded={this.uploaded} />
-                    )}
                     <div className="wraper-app">
                         <Route
                             exact

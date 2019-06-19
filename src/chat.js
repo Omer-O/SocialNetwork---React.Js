@@ -12,7 +12,6 @@ class Chat extends React.Component {
     handleChange({ target }) {
         this.state.chat = target.value;
     }
-
     saveChat() {
         console.log("save clicked, text: ", this.state.chat);
         // let socket = init();
@@ -31,10 +30,11 @@ class Chat extends React.Component {
                             <div className="chat" key={chat.id}>
                                 <div className="chat-user">
                                     <img
-                                        className="web-img"
+                                        className="chat-img"
                                         src={chat.url || "/img/profilepic.jpg"}
                                         alt={`${chat.first} ${chat.last}`}
                                     />
+                                    <p>{chat.created_at}</p>
                                 </div>
                                 <div className="chat-container">
                                     <p>{chat.message}</p>
