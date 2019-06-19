@@ -9,6 +9,8 @@ import { BrowserRouter, Route, Link } from "react-router-dom";
 import { OtherProfile } from "./otherprofile";
 import { FindPeople } from "./findpeople";
 import Friends from "./friends";
+import Chat from "./chat";
+
 export class App extends React.Component {
     constructor(props) {
         super(props);
@@ -44,14 +46,17 @@ export class App extends React.Component {
         console.log("this.state of app:", this.state);
         return (
             <BrowserRouter>
-                <div className="wraper-app">
+                <div>
                     <header className="wraper-header">
                         <img src="/img/logo.png" className="logo-image" />
                         <h2>
                             <Link to={"/findusers"}>find friend</Link>
                         </h2>
                         <h2>
-                            <Link to="/friends">Friends</Link>
+                            <Link to="/friends">friends</Link>
+                        </h2>
+                        <h2>
+                            <Link to="/chat">chat room</Link>
                         </h2>
                         <h2>
                             <Link to="/">edit profile</Link>
@@ -70,7 +75,7 @@ export class App extends React.Component {
                     {this.state.uploaderVisible && (
                         <Uploader uploaded={this.uploaded} />
                     )}
-                    <div>
+                    <div className="wraper-app">
                         <Route
                             exact
                             path="/"
@@ -85,9 +90,6 @@ export class App extends React.Component {
                                         bio={this.state.bio}
                                         bioEdit={this.bioEdit}
                                     />
-                                    <p>
-                                        {this.state.first} {this.state.last}
-                                    </p>
                                 </div>
                             )}
                         />
@@ -107,6 +109,7 @@ export class App extends React.Component {
                             render={() => <FindPeople />}
                         />
                         <Route path="/friends" component={Friends} />
+                        <Route path="/chat" component={Chat} />
                     </div>
                 </div>
             </BrowserRouter>

@@ -70,15 +70,23 @@ module.exports.selectUsers = function selectUsers() {
     );
 }; //selectUsers close.
 module.exports.searchUsers = function searchUsers(text) {
-    return db.query(
-        `
-        SELECT id, first, last, url
-        FROM users
-        WHERE first ILIKE $1
-        OR last ILIKE $1
-        LIMIT 20;`,
-        [text + "%"]
-    );
+    if (text == "formerUsers") {
+        return db.query(
+            `
+           SELECT * FROM users ORDER BY id DESC LIMIT 3;
+           `
+        );
+    } else {
+        return db.query(
+            `
+            SELECT id, first, last, url
+            FROM users
+            WHERE first ILIKE $1
+            OR last ILIKE $1
+            LIMIT 10;`,
+            [text + "%"]
+        );
+    }
 }; //searchUsers close.
 module.exports.friendStatus = function friendStatus(senderId, recieverId) {
     return db.query(
@@ -132,5 +140,41 @@ module.exports.wannabes = function wannabes(userId) {
     OR (accepted = true AND reciever_id = $1 AND sender_id = users.id)
     OR (accepted = true AND sender_id = $1 AND reciever_id = users.id)`,
         [userId]
+    );
+};
+
+module.exports.updateChat = function updateChat(chat, userId) {
+    return db.query(
+        `
+    INSERT INTO chat_messages (message, user_id)
+    VALUES ($1,$2)
+    RETURNING *
+    `,
+        [chat, userId]
+    );
+};
+
+module.exports.getChat = function getChat() {
+    return db.query(
+        `
+        SELECT chat_messages.id, first, last, url, message, chat_messages.created_at FROM chat_messages
+        JOIN users
+        ON user_id = users.id
+        ORDER BY id DESC
+        LIMIT 10
+        `
+    );
+};
+module.exports.getImageById = function getImageById(chatId) {
+    return db.query(
+        `
+        SELECT chat_messages.id, first, last, url, message, chat_messages.created_at
+        FROM chat_messages
+        JOIN users
+        ON user_id = users.id
+        WHERE chat_messages.id=$1
+        LIMIT 10
+        `,
+        [chatId]
     );
 };

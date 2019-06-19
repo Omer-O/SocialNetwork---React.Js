@@ -37,33 +37,34 @@ export class Login extends React.Component {
     } //submit close.
     render() {
         return (
-            <div className="big-container">
-                <h3>PLEASE LOGIN</h3>
-                <div className="form-container">
-                    {this.state.error}
-                    <input
-                        name="email"
-                        type="text"
-                        placeholder="email"
-                        required
-                        onChange={e => this.handleChange(e)}
-                    />
-                    <input
-                        name="password"
-                        type="password"
-                        placeholder="password"
-                        required
-                        onChange={e => this.handleChange(e)}
-                    />
-                    <button
-                        disabled={!this.state.password}
-                        onClick={e => this.submit(e)}
-                    >
-                        LOGIN
-                    </button>
-                </div>
+            <div className="form-container">
+                <h3>LOGIN</h3>
+                {this.state.error}
+                <input
+                    className="fadeIn first"
+                    name="email"
+                    type="text"
+                    placeholder="email"
+                    required
+                    onChange={e => this.handleChange(e)}
+                />
+                <input
+                    className="fadeIn second"
+                    name="password"
+                    type="password"
+                    placeholder="password"
+                    required
+                    onChange={e => this.handleChange(e)}
+                />
+                <button
+                    type="submit"
+                    disabled={!this.state.password}
+                    onClick={e => this.submit(e)}
+                >
+                    LOGIN
+                </button>
                 <h3>
-                    <Link to="/registration">Registration</Link>
+                    <a href="/registration">Registration</a>
                 </h3>
             </div>
         ); //render-return close.

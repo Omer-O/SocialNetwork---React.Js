@@ -1,16 +1,16 @@
-import React from 'react';
-import axios from './axios';
+import React from "react";
+import axios from "./axios";
 import { HashRouter, Route } from "react-router-dom";
-import { Profilepic } from './profilepic';
-import { BioEditor } from './bioeditor';
-import { ProfileBio } from './profilebio';
-import { App } from './app';
+import { Profilepic } from "./profilepic";
+import { BioEditor } from "./bioeditor";
+import { ProfileBio } from "./profilebio";
+import { App } from "./app";
 
 export class Profile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
-    }//constructor close.
+    } //constructor close.
     render() {
         return (
             <div className="wraper-profile">
@@ -22,12 +22,17 @@ export class Profile extends React.Component {
                         last={this.props.last}
                         showUpload={this.props.showUpload}
                     />
-                 </div>
-                     <BioEditor
+                    <p>
+                        {this.props.first} {this.props.last}
+                    </p>
+                </div>
+                <div className="bio">
+                    <BioEditor
                         bio={this.props.bio}
                         bioEdit={this.props.bioEdit}
                     />
+                </div>
             </div>
-        )
+        );
     }
-}//profile close.
+} //profile close.

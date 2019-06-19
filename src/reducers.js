@@ -31,15 +31,20 @@ export default function reducer(state = {}, action) {
             )
         };
     }
+
+    if (action.type === "CHAT_MESSAGES") {
+        return {
+            ...state,
+            chat: action.messages
+        };
+    }
+
+    if (action.type === "ADD_MESSAGE") {
+        return {
+            ...state,
+            chat: state.chat.concat(action.messages)
+        };
+    }
     console.log("this is action reducer:", action);
     return state;
 }
-//tips:
-//we can use:
-//spread operator (...)
-// OR object.assign()
-
-//clone our state is ...state, targeting
-//type reffer to the retun in actions.js
-//here we tell the reducer how to update the list
-//of animals to global state.

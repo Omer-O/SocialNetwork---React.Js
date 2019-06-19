@@ -19,14 +19,6 @@ class Friends extends React.Component {
                     {this.props.myFriends.length &&
                         this.props.myFriends.map(friend => (
                             <div className="friends" key={friend.id}>
-                                <button
-                                    className="unfriend-accpet-btn"
-                                    onClick={e =>
-                                        this.props.dispatch(unfriend(friend.id))
-                                    }
-                                >
-                                    Unfriend
-                                </button>
                                 <Link to={`/user/${friend.id}`}>
                                     <img
                                         className="web-img"
@@ -39,24 +31,22 @@ class Friends extends React.Component {
                                         {friend.first} {friend.last}
                                     </p>
                                 </Link>
+                                <button
+                                    className="unfriend-accpet-btn"
+                                    onClick={e =>
+                                        this.props.dispatch(unfriend(friend.id))
+                                    }
+                                >
+                                    Unfriend
+                                </button>
                             </div>
                         ))}
                 </div>
                 <div className="wraper-pending">
-                    <h1>PENDING</h1>
+                    <h1>PENDING REQUESTS</h1>
                     {this.props.pending.length &&
                         this.props.pending.map(pend => (
                             <div className="pending" key={pend.id}>
-                                <button
-                                    className="pending-accpet-btn"
-                                    onClick={e =>
-                                        this.props.dispatch(
-                                            acceptFriendship(pend.id)
-                                        )
-                                    }
-                                >
-                                    accpet
-                                </button>
                                 <Link to={`/user/${pend.id}`}>
                                     <img
                                         className="web-img"
@@ -67,6 +57,16 @@ class Friends extends React.Component {
                                         {pend.first} {pend.last}
                                     </p>
                                 </Link>
+                                <button
+                                    className="pending-accpet-btn"
+                                    onClick={e =>
+                                        this.props.dispatch(
+                                            acceptFriendship(pend.id)
+                                        )
+                                    }
+                                >
+                                    accpet
+                                </button>
                             </div>
                         ))}
                 </div>

@@ -1,7 +1,5 @@
-import React from 'react';
+import React from "react";
 
 export function Logo() {
-    return (
-        <img src="img/logo.png" className="img-logo"/>
-    )
+    return <img src="/img/logo.png" className="img-logo" />;
 }

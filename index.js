@@ -11,18 +11,31 @@ const csurf = require("csurf");
 const cookieParser = require("cookie-parser");
 const cookieSession = require("cookie-session");
 const compression = require("compression");
+const server = require("http").Server(app);
+const io = require("socket.io")(server, { origins: "localhost:8080" }); //here we need to remember to
+//change if deplpoy our project to a different app.
 app.use(compression());
 
 app.use(express.static("./public"));
 app.use(bodyParser.json());
 
+const cookieSessionMiddleware = cookieSession({
+    secret: `I'm always angry.`,
+    maxAge: 1000 * 60 * 60 * 24 * 90
+});
+
+app.use(cookieSessionMiddleware);
+io.use(function(socket, next) {
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
+});
+
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(
-    cookieSession({
-        secret: `I'm always angry.`,
-        maxAge: 1000 * 60 * 60 * 24 * 14
-    })
-);
+// app.use(
+//     cookieSession({
+//         secret: `I'm always angry.`,
+//         maxAge: 1000 * 60 * 60 * 24 * 14
+//     })
+// );
 
 app.use(csurf());
 
@@ -154,7 +167,7 @@ app.post("/user-image", uploader.single("file"), s3.upload, function(req, res) {
 }); //uploader.single function close
 ///////////////// POST bio update page /////////////////
 app.post("/bio", (req, res) => {
-    console.log("this is POST bio:", req.body);
+    console.log("this is POST bio:", req.body.bio);
     let user = req.session.userId;
     let bio = req.body.bio;
     db.updateUserBio(user, bio)
@@ -327,7 +340,6 @@ app.post("/end-friendship", async (req, res) => {
 });
 /////////////////////// GET /users /////////
 app.post("/users", (req, res) => {
-    //console.log("/users", req.body.search);
     db.searchUsers(req.body.search)
         .then(result => {
             console.log("this is result selectUsers", result);
@@ -352,6 +364,35 @@ app.get("*", function(req, res) {
     res.sendFile(__dirname + "/index.html");
 }); //* close.
 
-app.listen(8080, function() {
+server.listen(8080, function() {
     console.log("I'm listening.");
 });
+/////////////// socket.io ///////////////////////////////////
+io.on("connection", async socket => {
+    console.log(`socket with the id ${socket.id} is now connected`);
+    try {
+        if (!socket.request.session.userId) {
+            return socket.disconnect(true);
+        }
+        const userId = socket.request.session.userId;
+        const messages = await db.getChat();
+        console.log("this is getChat:", messages);
+        socket.emit("chatMessages", messages.rows);
+
+        socket.on("chatMessage", async msg => {
+            const newMessage = await db.updateChat(msg, userId);
+
+            const renderUser = await db.getImageById(newMessage.rows[0].id);
+            console.log("this is updateChat:", newMessage);
+            console.log("this is urenderUser:", renderUser);
+            io.sockets.emit("chatMessage", renderUser.rows[0]);
+        });
+
+        socket.on("disconnect", () => {
+            console.log(`socket with the id ${socket.id} is now disconnected`);
+        });
+    } catch (error) {
+        console.log("this is socket.io ERROR:", error);
+        return socket.disconnect(true);
+    }
+}); //io.on close.

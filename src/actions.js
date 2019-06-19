@@ -24,3 +24,21 @@ export async function unfriend(id) {
         endUserId: id
     };
 }
+
+//live chat:
+
+export function chatMessages(msgs) {
+    console.log("received messages (socketIO): ", msgs);
+    return {
+        type: "CHAT_MESSAGES",
+        messages: msgs
+    };
+}
+
+export function chatMessage(msg) {
+    console.log("action chatMessage", msg);
+    return {
+        type: "ADD_MESSAGE",
+        messages: msg
+    };
+}
