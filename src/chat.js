@@ -53,7 +53,13 @@ class Chat extends React.Component {
                                     </div>
                                     <div className="chat-container">
                                         <p className="create-at">
-                                            {chat.created_at}
+                                            {new Date(
+                                                chat.created_at
+                                            ).toDateString()}{" "}
+                                            /
+                                            {new Date(
+                                                chat.created_at
+                                            ).toLocaleTimeString()}
                                         </p>
                                         <p className="chat-message">
                                             {chat.message}
@@ -68,7 +74,7 @@ class Chat extends React.Component {
                         className="chat-field"
                         type="text"
                         name="textarea"
-                        defaultValue={this.props.bio}
+                        placeholder="please mumble here"
                         onChange={e => this.handleChange(e)}
                     />
                     <button
