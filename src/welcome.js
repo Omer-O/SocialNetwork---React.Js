@@ -8,7 +8,7 @@ export function Welcome() {
     return (
         <div className="registration-container">
             <img src="/img/logo.png" className="img-logo-welcome" />
-            <h2>Join the community</h2>
+            <h2>.... TALK and TALK and TALK ....</h2>
             <HashRouter>
                 <div>
                     <Route exact path="/" component={Registration} />

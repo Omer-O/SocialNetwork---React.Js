@@ -15,7 +15,7 @@ class Friends extends React.Component {
         return (
             <div className="friends-page-wraper">
                 <div className="warper-friends">
-                    <h1>FRIENDS</h1>
+                    <h1 className="friends-pending">FRIENDS</h1>
                     {this.props.myFriends.length &&
                         this.props.myFriends.map(friend => (
                             <div className="friends" key={friend.id}>
@@ -43,7 +43,7 @@ class Friends extends React.Component {
                         ))}
                 </div>
                 <div className="wraper-pending">
-                    <h1>PENDING REQUESTS</h1>
+                    <h1 className="friends-pending">PENDING REQUESTS</h1>
                     {this.props.pending.length &&
                         this.props.pending.map(pend => (
                             <div className="pending" key={pend.id}>

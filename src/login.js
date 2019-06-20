@@ -63,9 +63,6 @@ export class Login extends React.Component {
                 >
                     LOGIN
                 </button>
-                <h3>
-                    <a href="/registration">Registration</a>
-                </h3>
             </div>
         ); //render-return close.
     } //render close.

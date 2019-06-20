@@ -43,7 +43,6 @@ export class BioEditor extends React.Component {
             <div className="bio-wraper">
                 {this.state.error}
                 <div className="bio-container">
-                    <h4>PERSONAL INFORMATION</h4>
                     <p className="bio-field">{this.props.bio}</p>
                     <h4
                         className="edit-click"
