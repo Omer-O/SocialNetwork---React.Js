@@ -69,12 +69,12 @@ export class App extends React.Component {
                         <div className="uploader">
                             {this.state.uploaderVisible && (
                                 <div>
-                                    <div
+                                    <button
                                         className="close-click"
                                         onClick={e => this.handleClick(e)}
                                     >
                                         close X
-                                    </div>
+                                    </button>
                                     <Uploader uploaded={this.uploaded} />
                                 </div>
                             )}

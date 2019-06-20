@@ -381,7 +381,6 @@ io.on("connection", async socket => {
 
         socket.on("chatMessage", async msg => {
             const newMessage = await db.updateChat(msg, userId);
-
             const renderUser = await db.getImageById(newMessage.rows[0].id);
             console.log("this is updateChat:", newMessage);
             console.log("this is urenderUser:", renderUser);

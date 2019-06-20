@@ -34,8 +34,8 @@ class Chat extends React.Component {
             return <h1>LOADING</h1>;
         }
         return (
-            <div>
-                <h2>CHAT ROOM</h2>
+            <div className="chat-big-wraper">
+                <h1 className="friends-pending">CHAT ROOM</h1>
                 <div className="chat-wraper">
                     <div className="chat-container" ref={this.elemRef}>
                         {this.props.chat &&

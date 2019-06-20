@@ -25,7 +25,7 @@ export function FindPeople() {
     return (
         <div>
             <div className="search-bar">
-                <h1>FIND FRIENDS</h1>
+                <h1 className="friends-pending">FIND FRIENDS</h1>
                 <input
                     name="search"
                     type="text"

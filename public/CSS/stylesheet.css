@@ -29,6 +29,47 @@ h1.friends-pending {
 }
 
 h2 {
+	-moz-box-shadow:inset 0px 1px 0px 0px #fff6af;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #fff6af;
+	box-shadow:inset 0px 1px 0px 0px #fff6af;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffec64), color-stop(1, #ffab23));
+	background:-moz-linear-gradient(top, #ffec64 5%, #ffab23 100%);
+	background:-webkit-linear-gradient(top, #ffec64 5%, #ffab23 100%);
+	background:-o-linear-gradient(top, #ffec64 5%, #ffab23 100%);
+	background:-ms-linear-gradient(top, #ffec64 5%, #ffab23 100%);
+	background:linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffec64', endColorstr='#ffab23',GradientType=0);
+	background-color:#f06330;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #ffaa22;
+	cursor:pointer;
+	color:#333333;
+	font-weight:bold;
+    font-size: 2em;
+    text-align: center;
+    padding: 15px;
+    margin: 50px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffee66;
+}
+h2:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffab23), color-stop(1, #ffec64));
+	background:-moz-linear-gradient(top, #ffab23 5%, #ffec64 100%);
+	background:-webkit-linear-gradient(top, #ffab23 5%, #ffec64 100%);
+	background:-o-linear-gradient(top, #ffab23 5%, #ffec64 100%);
+	background:-ms-linear-gradient(top, #ffab23 5%, #ffec64 100%);
+	background:linear-gradient(to bottom, #ffab23 5%, #ffec64 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffab23', endColorstr='#ffec64',GradientType=0);
+	background-color: #f06330;
+}
+h2:active {
+	position:relative;
+	top:1px;
+}
+
+/* h2 {
     font-size: 2em;
     text-align: center;
     padding: 15px;
@@ -37,6 +78,10 @@ h2 {
     box-shadow: 0 1px 3px rgb(0, 0, 0), 0 1px 5px 1px rgba(0, 0, 0, 0.24);
     transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
 }
+
+h2:hover {
+
+} */
 
 h3 {
     font-size: 2em;
@@ -63,7 +108,7 @@ h3 {
 }
 
 .friends {
-    background: #AA00A2;
+    background: #3F8FD2;
     border: black 2px solid;
     border-radius: 20px;
     text-align: center;
@@ -82,7 +127,7 @@ h3 {
 }
 
 .pending {
-    background: #AA00A2;
+    background: #3F8FD2;
     border: black 2px solid;
     border-radius: 20px;
     text-align: center;
@@ -134,7 +179,7 @@ h3 {
 }
 
 .results-card {
-    background: #AA00A2;
+    background: #C9F600;
     border: black 2px solid;
     border-radius: 20px;
     text-align: center;
@@ -195,13 +240,15 @@ h3 {
 }
 
 .wraper-profile {
-    border: solid 15px #f06330;
+    border: solid 15px black;
     display: flex;
 }
-
-.chat-wraper {
+.chat-big-wraper {
     background-color: #c9f600;
     border: 10px solid;
+}
+.chat-wraper {
+    background-color: #c9f600;
     margin-top: 40px;
     height: 750px;
     overflow-y: scroll;
@@ -338,10 +385,10 @@ input:focus {
     outline: none;
 }
 
-input:focus {
-  box-shadow: 0 7px 14px rgba(0, 0, 0, 0.18), 0 5px 5px rgba(0, 0, 0, 0.12);
-
-}
+input:hover {
+    color: white;
+    box-shadow: 0 7px 14px rgba(0, 0, 0, 0.18), 0 5px 5px rgba(0, 0, 0, 0.12);
+ }
 
 button {
     background: #05386B;
@@ -369,23 +416,27 @@ button:disabled {
   box-shadow: 0 7px 14px rgb(219, 0, 0), 0 5px 5px rgba(0, 0, 0, 0.12);
 }
 
-h4.edit-click {
-    font-size: 20px;
+button.edit-click {
+    width: 170px;
+    display: flex;
     margin-top: 50px;
 }
 
 button.save-btn {
-
+    margin-bottom: 20px;
 }
 
+button.close-click {
+    margin: 5px;
+    padding: 5px;
+}
+
+.browse-btn:hover {
+    color: white;
+    box-shadow: 0 7px 14px rgba(0, 0, 0, 0.18), 0 5px 5px rgba(0, 0, 0, 0.12);
+ }
 .upload-btn {
-  border: 2px solid gray;
-  background: #05386B;
-  color: white;
-  padding: 8px 20px;
-  border-radius: 8px;
   font-size: 20px;
-  font-weight: bold;
 }
 
 ul {
